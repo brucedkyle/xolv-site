@@ -1,0 +1,33 @@
+name: text_classification
+channels:
+  - pytorch
+  - defaults
+  - pyg
+  - conda-forge
+  - nvidia
+dependencies:
+  - python
+  - pytorch
+  - torchaudio 
+  - pytorch-cuda
+  - torchvision
+  - cudatoolkit
+  - pytorch-scatter
+  - pip
+  - notebook
+  - ipykernel
+  - ipywidgets
+  - git-lfs
+  - libsndfile
+  - matplotlib
+  - numpy
+  - pandas
+  - seaborn
+  - conda-forge::transformers
+  - datasets
+  - huggingface_hub=0.23.2
+  - umap-learn
+  - accelerate
+  - cuda-cudart
+#  - pip:
+#    - -r requirements.txt
