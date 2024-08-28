@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>How to set up GPU development for containers with Podman - Xolv Samples, Demos, Docs</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Xolv Samples, Demos, Docs</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Welcome to MkDocs</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Deploy</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../deploy/deploycontainer/" class="dropdown-item">Deploy the application using a GitHub repo with sources and a Dockerfile to OpenShift</a>
+</li>
+                                    
+<li>
+    <a href="../../deploy/deploytolocalregistry/" class="dropdown-item">Deploy application to local registry on OpenShift</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Setup</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../jupyterdockerstacks/" class="dropdown-item">About Jupyter Docker Stacks</a>
+</li>
+                                    
+<li>
+    <a href="../setupdocker/" class="dropdown-item">Set up development computer with Docker, Jupyter</a>
+</li>
+                                    
+<li>
+    <a href="../setupdockersecrets/" class="dropdown-item">Set up your secrets for Docker</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active" aria-current="page">How to set up GPU development for containers with Podman</a>
+</li>
+                                    
+<li>
+    <a href="../setupnvidiadriver/" class="dropdown-item">Install NVIDIA GPU display driver</a>
+</li>
+                                    
+<li>
+    <a href="../setupsecrets/" class="dropdown-item">Set up tokens and use as environment variables</a>
+</li>
+                                    
+<li>
+    <a href="../setupsecretsforkubernetes/" class="dropdown-item">Set up your secrets for Kubernetes</a>
+</li>
+                                    
+<li>
+    <a href="../setuptokensforcontainers/" class="dropdown-item">Set up your tokens, passwords, secrets for Podman</a>
+</li>
+                                    
+<li>
+    <a href="../startjupyterinenv/" class="dropdown-item">Start Jupyter notebook in a Conda environment</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../setupdockersecrets/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../setupnvidiadriver/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#how-to-set-up-gpu-development-for-containers-with-podman" class="nav-link">How to set up GPU development for containers with Podman</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#definitions" class="nav-link">Definitions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#prerequisites" class="nav-link">Prerequisites</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#upgrade-ubuntu" class="nav-link">Upgrade Ubuntu</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#install-podman" class="nav-link">Install podman</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#add-dockerio-registry" class="nav-link">Add docker.io registry</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#start-podman" class="nav-link">Start Podman</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#install-toolkit-or-toolkit-base" class="nav-link">Install Toolkit or Toolkit Base</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#set-the-rootless-configuration" class="nav-link">Set the rootless configuration</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#setup-missing-hook-for-nvidia-container-runtime" class="nav-link">Setup missing hook for nvidia container runtime</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#increase-memlock-and-stack-ulimits" class="nav-link">Increase memlock and stack ulimits</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#generate-cdi-specification-file" class="nav-link">Generate CDI specification file</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#running-a-container-with-podmans-gpus" class="nav-link">Running a container with Podman's GPUs</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#to-build-your-container" class="nav-link">To build your container</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#resources" class="nav-link">Resources</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="how-to-set-up-gpu-development-for-containers-with-podman">How to set up GPU development for containers with Podman</h1>
+<p>In this article, learn how to set up your GPU development environment to run inside Podman. Most users can simply alias Docker to Podman (<code>alias docker=podman</code>) without any problems.</p>
+<p>Podman supports the <strong>Container Device Interface</strong>.</p>
+<p>The following is a compilation from sources, bug reports, GitHub repos that worked when I tried it on my laptop. Special thanks to <a href="https://github.com/henrymai">henrymai</a> who's <a href="https://github.com/henrymai/podman_wsl2_cuda_rootless?tab=readme-ov-file#setup-podman-for-wsl2-with-cuda-support-rootless">README</a> was significant help.</p>
+<h2 id="definitions">Definitions</h2>
+<ul>
+<li><a href="https://podman.io/docs">Podman</a> is a utility so you can create and maintain containers. Podman is a daemonless, open source, Linux native tool designed to make it easy to find, run, build, share and deploy applications using Open Containers Initiative (OCI) Containers and Container Images. See <a href="https://docs.podman.io/en/latest/">What is Podman</a>,</li>
+<li><strong>CDI</strong> is an open specification for container runtimes that abstracts what access to a device, such as an NVIDIA GPU, means, and standardizes access across container runtimes. Popular container runtimes can read and process the specification to ensure that a device is available in a container. CDI simplifies adding support for devices such as NVIDIA GPUs because the specification is applicable to all container runtimes that support CDI.</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>You will need to have:</p>
+<ul>
+<li>Laptop or desktop with GPU</li>
+<li>Device drivers installed</li>
+<li><strong>WSL</strong> installed</li>
+<li>Visual Studio Code (or other Linux text editor)</li>
+<li>The username</li>
+<li>Recent version of Podman &gt; 4.7. This code tested on version 5.5.2</li>
+</ul>
+<p>To check the version you have installed use:</p>
+<pre><code>podman --version
+</code></pre>
+<p>See <a href="../setupnvidiadriver/">Install NVIDIA GPU display driver</a> for details.</p>
+<h2 id="upgrade-ubuntu">Upgrade Ubuntu</h2>
+<pre><code>sudo apt-get remove snapd
+sudo apt-get update
+sudo apt-get upgrade
+sudo do-release-upgrade
+
+# get release version
+ubuntu_release=lsb_release -r
+$ubuntu_release
+</code></pre>
+<h2 id="install-podman">Install podman</h2>
+<p>You will also need Podman installed. Start <strong>WSL</strong>, then run</p>
+<pre><code class="language-bash">sudo apt-get update
+sudo apt-get -y install podman
+</code></pre>
+<h2 id="add-dockerio-registry">Add docker.io registry</h2>
+<pre><code class="language-bash">echo 'unqualified-search-registries = [&quot;docker.io&quot;]' | sudo tee /etc/containers/registries.conf
+</code></pre>
+<h2 id="start-podman">Start Podman</h2>
+<p>To start Podman the first time, run:</p>
+<pre><code class="language-bash">podman machine init
+podman machine start
+</code></pre>
+<p>To test you have the prerequisites installed, type the following command into <strong>WSL</strong>:</p>
+<pre><code class="language-bash">podman run ubi8-micro date
+</code></pre>
+<p>You should see today's date.</p>
+<h2 id="install-toolkit-or-toolkit-base">Install Toolkit or Toolkit Base</h2>
+<p>You will need to install either the NVIDIA Container Toolkit or you installed the <code>nvidia-container-toolkit-base</code> package.</p>
+<p>Get the Ubuntu version</p>
+<pre><code>. /etc/os-release
+echo &quot;$VERSION_ID&quot;
+</code></pre>
+<p>To install the NVIDIA container toolkit, run:</p>
+<pre><code class="language-bash">distribution=ubuntu + echo &quot;$VERSION_ID&quot;
+curl -s -L https://nvidia.github.io/libnvidia-container/gpgkey | sudo apt-key add - &amp;&amp; curl -s -L https://nvidia.github.io/libnvidia-container/$distribution/libnvidia-container.list | sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+
+sudo apt-get update
+sudo apt-get install nvidia-container-toolkit
+</code></pre>
+<p>For more information, see <a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html">Installing the NVIDIA Container Toolkit</a>.</p>
+<h2 id="set-the-rootless-configuration">Set the rootless configuration</h2>
+<p>Set the NVIDIA container runtime to run as rootless. This sets you up for Podman's ability to manage containers without root access.</p>
+<pre><code class="language-bash">code /etc/nvidia-container-runtime/config.toml
+</code></pre>
+<p>Modify the <code>config.toml</code> file as follows:</p>
+<pre><code class="language-text">[nvidia-container-cli]
+#no-cgroups = false
+no-cgroups = true
+
+[nvidia-container-runtime]
+#debug = &quot;/var/log/nvidia-container-runtime.log&quot;
+debug = &quot;~/.local/nvidia-container-runtime.log&quot;
+</code></pre>
+<h2 id="setup-missing-hook-for-nvidia-container-runtime">Setup missing hook for nvidia container runtime</h2>
+<p>Run:</p>
+<pre><code class="language-bash">sudo mkdir -p /usr/share/containers/oci/hooks.d/
+
+cat &lt;&lt; EOF | sudo tee /usr/share/containers/oci/hooks.d/oci-nvidia-hook.json
+{
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;hook&quot;: {
+        &quot;path&quot;: &quot;/usr/bin/nvidia-container-toolkit&quot;,
+        &quot;args&quot;: [&quot;nvidia-container-toolkit&quot;, &quot;prestart&quot;],
+        &quot;env&quot;: [
+            &quot;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;
+        ]
+    },
+    &quot;when&quot;: {
+        &quot;always&quot;: true,
+        &quot;commands&quot;: [&quot;.*&quot;]
+    },
+    &quot;stages&quot;: [&quot;prestart&quot;]
+}
+EOF
+</code></pre>
+<h2 id="increase-memlock-and-stack-ulimits">Increase memlock and stack ulimits</h2>
+<p>This is necessary otherwise any reasonable sized training run will hit these limits immediately.</p>
+<p>Use:</p>
+<pre><code>code /etc/security/limits.conf
+</code></pre>
+<p>Assuming your username is <code>someuser</code>:</p>
+<pre><code class="language-text">someuser soft memlock unlimited
+someuser hard memlock unlimited
+someuser soft stack 65536
+someuser hard stack 65536
+</code></pre>
+<h2 id="generate-cdi-specification-file">Generate CDI specification file</h2>
+<p>Generate the CDI specification file</p>
+<pre><code class="language-bash">sudo nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml
+</code></pre>
+<p>You should see something like this:</p>
+<pre><code class="language-text">INFO[0000] Auto-detected mode as &quot;nvml&quot;
+INFO[0000] Selecting /dev/nvidia0 as /dev/nvidia0
+INFO[0000] Selecting /dev/dri/card1 as /dev/dri/card1
+INFO[0000] Selecting /dev/dri/renderD128 as /dev/dri/renderD128
+...
+</code></pre>
+<p>Check the names of the generated devices</p>
+<pre><code class="language-bash">nvidia-ctk cdi list
+</code></pre>
+<p>System returns:</p>
+<pre><code class="language-text">INFO[0000] Found 1 CDI devices
+nvidia.com/gpu=all
+</code></pre>
+<h2 id="running-a-container-with-podmans-gpus">Running a container with Podman's GPUs</h2>
+<p>Test the installation by running:</p>
+<pre><code class="language-bash">podman run -it --group-add video docker.io/tensorflow/tensorflow:latest-gpu-jupyter nvidia-smi
+</code></pre>
+<h2 id="to-build-your-container">To build your container</h2>
+<p>Look up the latest version of <code>nvidia/cuda</code> on docker.io. See <a href="https://hub.docker.com/r/nvidia/cuda/tags?page=1&amp;page_size=&amp;ordering=last_updated&amp;name=">nvidia/cuda on DockerHub</a>. In my case, I found <code>nvidia/cuda:12.5.1-runtime-ubuntu22.04</code></p>
+<pre><code class="language-bash">su someuser -c &quot;podman run --rm nvidia/cuda:12.5.1-runtime-ubuntu22.04  nvidia-smi; cat /proc/self/limits&quot;
+</code></pre>
+<p>The command requests the full GPU with index 0 and the first MIG device on GPU 1. The output should show only the UUIDs of the requested devices.</p>
+<p><img alt="podman runs cuda" src="../media/podman-runs-cuda.png" /></p>
+<h2 id="resources">Resources</h2>
+<p>See:</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/windows/wsl/tutorials/gpu-compute">Get started with GPU acceleration for ML in WSL</a></li>
+<li><a href="https://github.com/containers/podman/blob/main/docs/tutorials/podman-for-windows.md">Podman for Windows</a></li>
+<li><a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html">Installing the NVIDIA Container Toolkit</a></li>
+<li><a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/cdi-support.html">Support for Container Device Interface</a></li>
+<li><a href="https://github.com/henrymai/podman_wsl2_cuda_rootless/blob/master/README.md">Setup podman for WSL2 with cuda support (rootless)</a></li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
