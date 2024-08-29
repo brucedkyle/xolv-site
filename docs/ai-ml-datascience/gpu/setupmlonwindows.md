@@ -212,7 +212,7 @@ su someuser -c "podman run --rm nvidia/cuda:12.5.1-runtime-ubuntu22.04  nvidia-s
 
 The command requests the full GPU with index 0 and the first MIG device on GPU 1. The output should show only the UUIDs of the requested devices.
 
-![podman runs cuda](media/podman-runs-cuda.png)
+![podman runs cuda](../media/podman-runs-cuda.png)
 
 ## Resources
 

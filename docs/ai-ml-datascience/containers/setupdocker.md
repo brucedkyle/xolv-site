@@ -146,13 +146,13 @@ docker run -p 8888:8888 my-jupyter
 
 Click on the https://127.0.0.1:8888 link. It has the code to log into Jupyter notebook
 
-![start notebook](media/startjupyter.png)
+![start notebook](../media/startjupyter.png)
 
 ## Create your notebook on your local computer
 
 You are logged into the notebook from the startup directory on your development computer.
 
-![notebook starts](media/notebookstarts.png)
+![notebook starts](../media/notebookstarts.png)
 
 ## Run the container with environment variables
 

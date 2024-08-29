@@ -21,8 +21,6 @@ nav:
       - Text classification [GitHub]: https://github.com/brucedkyle/xolv-site/blob/main/nlm-pattern/text-classification/README.md
 theme: 
   name: material
-  font:
-    - text: Nanum Gothic
   features:
     - navigation.tabs
     - navigation.sections
