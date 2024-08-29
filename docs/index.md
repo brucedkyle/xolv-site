@@ -1,17 +1,11 @@
-# Welcome to MkDocs
+![xolv.info](./media/xolvinfo.png)
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+# Welcome to xolv.info
 
-## Commands
+This site provides a wiki-like approach to topic of interest to:
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+- Solution architects on Azure
+- Data science
+- IBM Cloud
 
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+References are included to original source material. 

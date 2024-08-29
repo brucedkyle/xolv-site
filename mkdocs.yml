@@ -1,1 +1,80 @@
-site_name: Xolv Samples, Demos, Docs
+site_name: xolv Samples, Demos, Docs
+site_url: https://xolv.info/
+extra_css:
+  - stylesheets/extra.css
+nav:
+  - Home: index.md
+  - AI ML Data Science: 
+    - Overview: ./ai-ml-datascience/index.md
+    - Jupyter Notebooks:
+      - Set up Jupyter Notebook: ./ai-ml-datascience/notebook/startjupyterinenv.md
+      - Set up secrets: ./ai-ml-datascience/notebook/setupsecrets.md
+    - GPU:
+      - Set up GPU on dev: ./ai-ml-datascience/gpu/setupnvidiadriver.md
+    - Containers:
+      - Jupyter Docker Stacks: ./ai-ml-datascience/containers/jupyterdockerstacks.md
+      - Set up GPU for Podman: ./ai-ml-datascience/gpu/setupmlonwindows.md
+      - Set up secrets on Podman: ./ai-ml-datascience/containers/setuptokensforcontainers.md
+    - Samples:
+      - Text classification [GitHub]: https://github.com/brucedkyle/xolv-site/blob/main/nlm-pattern/text-classification/README.md
+theme: 
+  name: material
+  font:
+      text: Nanum Gothic
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - content.code.annotation
+    - content.code.copy
+    - header.autohide
+    - navigation.footer
+    - content.action.edit
+    - content.action.view
+    - search.suggest
+    - search.share
+  language: en
+  icon: 
+      repo: fontawesome/brands/github
+      edit: material/pencil 
+      view: material/eye
+  logo: ./media/my-xolv.info.png
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
+plugins:
+  - git-revision-date-localized:
+      enable_creation_date: true
+  - search:
+      lang: en
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.betterem
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - attr_list
+  - pymdownx.smartsymbols
+  - tables
+  - footnotes
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+copyright: Copyright &copy; 2023 xolv.co 
