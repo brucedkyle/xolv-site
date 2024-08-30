@@ -51,13 +51,13 @@ For more info about which driver to install, see:
 
 Launch your preferred Windows Terminal / Command Prompt / Powershell and install WSL:
 
-```
+```bash
 wsl.exe --install
 ```
 
 Ensure you have the latest WSL kernel:
 
-```
+```bash
 wsl.exe --update
 ```
 
@@ -65,7 +65,7 @@ wsl.exe --update
 
 From a Windows terminal, enter WSL:
 
-```
+```powershell
 C:\> wsl.exe
 ```
 
@@ -73,7 +73,7 @@ C:\> wsl.exe
 
 To test the driver installation:
 
-```
+```bash
 nvidia-smi -L
 ```
 Returns something similar to:
@@ -84,7 +84,7 @@ GPU 0: NVIDIA GeForce RTX 3060 Laptop GPU (UUID: GPU-fbeb177f-f196-93e0-b215-12b
 
 OR for more fun
 
-```
+```bash
 nvidia-smi
 ```
 
