@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.33">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.33">
     
     
       
@@ -683,6 +683,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#start-podman" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start Podman
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#add-dockerio-registry" class="md-nav__link">
     <span class="md-ellipsis">
       Add docker.io registry
@@ -692,9 +701,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#start-podman" class="md-nav__link">
+  <a href="#run-a-container-from-podman" class="md-nav__link">
     <span class="md-ellipsis">
-      Start Podman
+      Run a container from Podman
     </span>
   </a>
   
@@ -710,45 +719,27 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#set-the-rootless-configuration" class="md-nav__link">
+  <a href="#set-the-rootless-configuration-for-container-device-interface" class="md-nav__link">
     <span class="md-ellipsis">
-      Set the rootless configuration
+      Set the rootless configuration for Container Device Interface
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#setup-missing-hook-for-nvidia-container-runtime" class="md-nav__link">
+  <a href="#running-gpu-workloads" class="md-nav__link">
     <span class="md-ellipsis">
-      Setup missing hook for nvidia container runtime
+      Running GPU workloads
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#increase-memlock-and-stack-ulimits" class="md-nav__link">
+  <a href="#increase-memlock-and-stack-ulimits-optional" class="md-nav__link">
     <span class="md-ellipsis">
-      Increase memlock and stack ulimits
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#generate-cdi-specification-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      Generate CDI specification file
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#running-a-container-with-podmans-gpus" class="md-nav__link">
-    <span class="md-ellipsis">
-      Running a container with Podman's GPUs
+      Increase memlock and stack ulimits [optional]
     </span>
   </a>
   
@@ -990,20 +981,16 @@
 <ul>
 <li>Laptop or desktop with GPU</li>
 <li>Device drivers installed</li>
-<li><strong>WSL</strong> installed</li>
+<li><strong>WSL</strong> installed. (I installed a fresh distribution of Ubuntu.)</li>
 <li>Visual Studio Code (or other Linux text editor)</li>
 <li>The username</li>
-<li>Recent version of Podman &gt; 4.7. This code tested on version 5.5.2</li>
 </ul>
 <p>To check the version you have installed use:</p>
 <div class="highlight"><pre><span></span><code>podman --version
 </code></pre></div>
 <p>See <a href="../setupnvidiadriver/">Install NVIDIA GPU display driver</a> for details.</p>
 <h2 id="upgrade-ubuntu">Upgrade Ubuntu</h2>
-<div class="highlight"><pre><span></span><code>sudo apt-get remove snapd
-sudo apt-get update
-sudo apt-get upgrade
-sudo do-release-upgrade
+<div class="highlight"><pre><span></span><code>sudo apt update &amp;&amp; sudo apt upgrade
 
 # get release version
 ubuntu_release=lsb_release -r
@@ -1011,71 +998,133 @@ $ubuntu_release
 </code></pre></div>
 <h2 id="install-podman">Install podman</h2>
 <p>You will also need Podman installed. Start <strong>WSL</strong>, then run</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
-sudo<span class="w"> </span>apt-get<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>podman
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>remove<span class="w"> </span>docker<span class="w"> </span>docker-engine<span class="w"> </span>docker.io<span class="w"> </span>containerd<span class="w"> </span>runc
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>--no-install-recommends<span class="w"> </span>apt-transport-https<span class="w"> </span>ca-certificates<span class="w"> </span>curl<span class="w"> </span>gnupg2
+sudo<span class="w"> </span>apt<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>podman
+podman<span class="w"> </span>version
 </code></pre></div>
-<h2 id="add-dockerio-registry">Add docker.io registry</h2>
-<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;unqualified-search-registries = [&quot;docker.io&quot;]&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/containers/registries.conf
+<p>You should see something like this:</p>
+<div class="highlight"><pre><span></span><code>WARN[0000] &quot;/&quot; is not a shared mount, this could cause issues or missing mounts with rootless containers
+Client:       Podman Engine
+Version:      4.9.3
+API Version:  4.9.3
+Go Version:   go1.22.2
+Built:        Wed Dec 31 16:00:00 1969
+OS/Arch:      linux/amd64
 </code></pre></div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The version of Podman should return a version greater than 4.9. Updating the Windows host does not update the version of Podman running in your distribution. In my case, I created a new distribution to get the latest version (as of the time of this writing).</p>
+</div>
 <h2 id="start-podman">Start Podman</h2>
 <p>To start Podman the first time, run:</p>
 <div class="highlight"><pre><span></span><code>podman<span class="w"> </span>machine<span class="w"> </span>init
 podman<span class="w"> </span>machine<span class="w"> </span>start
 </code></pre></div>
-<p>To test you have the prerequisites installed, type the following command into <strong>WSL</strong>:</p>
+<h2 id="add-dockerio-registry">Add docker.io registry</h2>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;unqualified-search-registries = [&quot;docker.io&quot;]&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/containers/registries.conf
+</code></pre></div>
+<h2 id="run-a-container-from-podman">Run a container from Podman</h2>
+<p>Run a sample container in Podman.</p>
+<div class="highlight"><pre><span></span><code>podman<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span>busybox
+</code></pre></div>
+<p>You should see:</p>
+<div class="highlight"><pre><span></span><code>Resolved &quot;busybox&quot; as an alias (/etc/containers/registries.conf.d/shortnames.conf)
+Trying to pull docker.io/library/busybox:latest...
+Getting image source signatures
+Copying blob ec562eabd705 done   |
+Copying config 65ad0d468e done   |
+Writing manifest to image destination
+/ #
+</code></pre></div>
+<p>Type <code>exit</code>.</p>
+<div class="highlight"><pre><span></span><code>podman<span class="w"> </span>run<span class="w"> </span>ubi8-micro<span class="w"> </span>date
+</code></pre></div>
+<p>Or</p>
 <div class="highlight"><pre><span></span><code>podman<span class="w"> </span>run<span class="w"> </span>ubi8-micro<span class="w"> </span>date
 </code></pre></div>
 <p>You should see today's date.</p>
 <h2 id="install-toolkit-or-toolkit-base">Install Toolkit or Toolkit Base</h2>
 <p>You will need to install either the NVIDIA Container Toolkit or you installed the <code>nvidia-container-toolkit-base</code> package.</p>
 <p>Get the Ubuntu version</p>
-<div class="highlight"><pre><span></span><code>. /etc/os-release
-echo &quot;$VERSION_ID&quot;
+<div class="highlight"><pre><span></span><code>.<span class="w"> </span>/etc/os-release
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$VERSION_ID</span><span class="s2">&quot;</span>
 </code></pre></div>
-<p>To install the NVIDIA container toolkit, run:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">distribution</span><span class="o">=</span>ubuntu<span class="w"> </span>+<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$VERSION_ID</span><span class="s2">&quot;</span>
+<p>To install the <a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html">NVIDIA container toolkit</a>, run:</p>
+<ol>
+<li>Configure the production repository:</li>
+</ol>
+<p><div class="highlight"><pre><span></span><code><span class="nv">distribution</span><span class="o">=</span>ubuntu<span class="w"> </span>+<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$VERSION_ID</span><span class="s2">&quot;</span>
 curl<span class="w"> </span>-s<span class="w"> </span>-L<span class="w"> </span>https://nvidia.github.io/libnvidia-container/gpgkey<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>apt-key<span class="w"> </span>add<span class="w"> </span>-<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>curl<span class="w"> </span>-s<span class="w"> </span>-L<span class="w"> </span>https://nvidia.github.io/libnvidia-container/<span class="nv">$distribution</span>/libnvidia-container.list<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/nvidia-container-toolkit.list
-
-sudo<span class="w"> </span>apt-get<span class="w"> </span>update
-sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>nvidia-container-toolkit
+</code></pre></div>
+2. Update the packages list from the repository:</p>
+<p><div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+</code></pre></div>
+3. Install the NVIDIA Container Toolkit packages:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>nvidia-container-toolkit
+</code></pre></div>
+<p>You will see the Container Toolkit install beginning with something like this:</p>
+<div class="highlight"><pre><span></span><code>Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  libnvidia-container-tools libnvidia-container1 nvidia-container-toolkit-base
+The following NEW packages will be installed:
+  libnvidia-container-tools libnvidia-container1 nvidia-container-toolkit nvidia-container-toolkit-base
+0 upgraded, 4 newly installed, 0 to remove and 3 not upgraded.
 </code></pre></div>
 <p>For more information, see <a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html">Installing the NVIDIA Container Toolkit</a>.</p>
-<h2 id="set-the-rootless-configuration">Set the rootless configuration</h2>
-<p>Set the NVIDIA container runtime to run as rootless. This sets you up for Podman's ability to manage containers without root access.</p>
-<div class="highlight"><pre><span></span><code>code<span class="w"> </span>/etc/nvidia-container-runtime/config.toml
+<h2 id="set-the-rootless-configuration-for-container-device-interface">Set the rootless configuration for Container Device Interface</h2>
+<p>Set the <a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/cdi-support.html">NVIDIA container runtime</a> to run as rootless. This sets you up for Podman's ability to manage containers without root access.</p>
+<ol>
+<li>Generate the CDI specification file:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nvidia-ctk<span class="w"> </span>cdi<span class="w"> </span>generate<span class="w"> </span>--output<span class="o">=</span>/etc/cdi/nvidia.yaml
 </code></pre></div>
-<p>Modify the <code>config.toml</code> file as follows:</p>
-<div class="highlight"><pre><span></span><code>[nvidia-container-cli]
-#no-cgroups = false
-no-cgroups = true
-
-[nvidia-container-runtime]
-#debug = &quot;/var/log/nvidia-container-runtime.log&quot;
-debug = &quot;~/.local/nvidia-container-runtime.log&quot;
+<p>You will see some output similar to:</p>
+<div class="highlight"><pre><span></span><code>INFO[0000] Using /usr/lib/wsl/lib/libnvidia-ml.so.1
+INFO[0000] Auto-detected mode as &#39;wsl&#39;
+INFO[0000] Selecting /dev/dxg as /dev/dxg
+INFO[0000] Using WSL driver store paths: [/usr/lib/wsl/drivers/nvlti.inf_amd64_70bff6400ff3c791 /usr/lib/wsl/drivers/u0390955.inf_amd64_53cfc5cd131b06d4]
+...
+INFO[0000] Selecting /usr/lib/wsl/drivers/nvlti.inf_amd64_70bff6400ff3c791/nvidia-smi as /usr/lib/wsl/drivers/nvlti.inf_amd64_70bff6400ff3c791/nvidia-smi
+INFO[0000] Generated CDI spec with version 0.8.0
 </code></pre></div>
-<h2 id="setup-missing-hook-for-nvidia-container-runtime">Setup missing hook for nvidia container runtime</h2>
-<p>Run:</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/usr/share/containers/oci/hooks.d/
-
-cat<span class="w"> </span><span class="s">&lt;&lt; EOF | sudo tee /usr/share/containers/oci/hooks.d/oci-nvidia-hook.json</span>
-<span class="s">{</span>
-<span class="s">    &quot;version&quot;: &quot;1.0.0&quot;,</span>
-<span class="s">    &quot;hook&quot;: {</span>
-<span class="s">        &quot;path&quot;: &quot;/usr/bin/nvidia-container-toolkit&quot;,</span>
-<span class="s">        &quot;args&quot;: [&quot;nvidia-container-toolkit&quot;, &quot;prestart&quot;],</span>
-<span class="s">        &quot;env&quot;: [</span>
-<span class="s">            &quot;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;</span>
-<span class="s">        ]</span>
-<span class="s">    },</span>
-<span class="s">    &quot;when&quot;: {</span>
-<span class="s">        &quot;always&quot;: true,</span>
-<span class="s">        &quot;commands&quot;: [&quot;.*&quot;]</span>
-<span class="s">    },</span>
-<span class="s">    &quot;stages&quot;: [&quot;prestart&quot;]</span>
-<span class="s">}</span>
-<span class="s">EOF</span>
+<ol>
+<li>Check the names of the generated devices:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>nvidia-ctk<span class="w"> </span>cdi<span class="w"> </span>list
 </code></pre></div>
-<h2 id="increase-memlock-and-stack-ulimits">Increase memlock and stack ulimits</h2>
+<p>You should see something similar to:</p>
+<div class="highlight"><pre><span></span><code>INFO[0000] Found 1 CDI devices
+nvidia.com/gpu=all
+</code></pre></div>
+<ol>
+<li>Run a workload with CDI</li>
+</ol>
+<div class="highlight"><pre><span></span><code>podman<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--device<span class="w"> </span>nvidia.com/gpu<span class="o">=</span>all<span class="w"> </span>--security-opt<span class="o">=</span><span class="nv">label</span><span class="o">=</span>disable<span class="w"> </span>ubuntu<span class="w"> </span>nvidia-smi<span class="w"> </span>-L
+</code></pre></div>
+<p>You should see something similar to:"</p>
+<div class="highlight"><pre><span></span><code>GPU 0: NVIDIA GeForce RTX 3060 Laptop GPU (UUID: GPU-fbeb177f-f196-93e0-b215-12b7c899dc82)
+</code></pre></div>
+<h2 id="running-gpu-workloads">Running GPU workloads</h2>
+<p>When it comes time to run you workloads, you will use something simlar to:</p>
+<p><div class="highlight"><pre><span></span><code>podman<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--device<span class="w"> </span>nvidia.com/gpu<span class="o">=</span>all<span class="w"> </span>--security-opt<span class="o">=</span><span class="nv">label</span><span class="o">=</span>disable<span class="w"> </span>ubuntu<span class="w"> </span>nvidia-smi
+</code></pre></div>
+The important parameters:</p>
+<ul>
+<li><code>--device nvidia.com/gpu=all</code> Add a host device to the container. </li>
+<li><code>--security-opt=label=disable</code> Turn off label separation for the container.</li>
+<li><code>-p</code> port forwarding.</li>
+</ul>
+<p>If you have more than one GPU available, you can specify which one using:</p>
+<div class="highlight"><pre><span></span><code>podman<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--device<span class="w"> </span>nvidia.com/gpu<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--device<span class="w"> </span>nvidia.com/gpu<span class="o">=</span><span class="m">1</span>:0<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--security-opt<span class="o">=</span><span class="nv">label</span><span class="o">=</span>disable<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>ubuntu<span class="w"> </span>nvidia-smi<span class="w"> </span>-L
+</code></pre></div>
+<h2 id="increase-memlock-and-stack-ulimits-optional">Increase memlock and stack ulimits [optional]</h2>
 <p>This is necessary otherwise any reasonable sized training run will hit these limits immediately.</p>
 <p>Use:</p>
 <div class="highlight"><pre><span></span><code>code /etc/security/limits.conf
@@ -1086,31 +1135,10 @@ someuser hard memlock unlimited
 someuser soft stack 65536
 someuser hard stack 65536
 </code></pre></div>
-<h2 id="generate-cdi-specification-file">Generate CDI specification file</h2>
-<p>Generate the CDI specification file</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nvidia-ctk<span class="w"> </span>cdi<span class="w"> </span>generate<span class="w"> </span>--output<span class="o">=</span>/etc/cdi/nvidia.yaml
-</code></pre></div>
-<p>You should see something like this:</p>
-<div class="highlight"><pre><span></span><code>INFO[0000] Auto-detected mode as &quot;nvml&quot;
-INFO[0000] Selecting /dev/nvidia0 as /dev/nvidia0
-INFO[0000] Selecting /dev/dri/card1 as /dev/dri/card1
-INFO[0000] Selecting /dev/dri/renderD128 as /dev/dri/renderD128
-...
-</code></pre></div>
-<p>Check the names of the generated devices</p>
-<div class="highlight"><pre><span></span><code>nvidia-ctk<span class="w"> </span>cdi<span class="w"> </span>list
-</code></pre></div>
-<p>System returns:</p>
-<div class="highlight"><pre><span></span><code>INFO[0000] Found 1 CDI devices
-nvidia.com/gpu=all
-</code></pre></div>
-<h2 id="running-a-container-with-podmans-gpus">Running a container with Podman's GPUs</h2>
-<p>Test the installation by running:</p>
-<div class="highlight"><pre><span></span><code>podman<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--group-add<span class="w"> </span>video<span class="w"> </span>docker.io/tensorflow/tensorflow:latest-gpu-jupyter<span class="w"> </span>nvidia-smi
-</code></pre></div>
 <h2 id="to-build-your-container">To build your container</h2>
-<p>Look up the latest version of <code>nvidia/cuda</code> on docker.io. See <a href="https://hub.docker.com/r/nvidia/cuda/tags?page=1&amp;page_size=&amp;ordering=last_updated&amp;name=">nvidia/cuda on DockerHub</a>. In my case, I found <code>nvidia/cuda:12.5.1-runtime-ubuntu22.04</code></p>
-<div class="highlight"><pre><span></span><code>su<span class="w"> </span>someuser<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;podman run --rm nvidia/cuda:12.5.1-runtime-ubuntu22.04  nvidia-smi; cat /proc/self/limits&quot;</span>
+<p>Look up the latest version of <code>nvidia/cuda</code> on docker.io. See <a href="https://hub.docker.com/r/nvidia/cuda/tags?page=1&amp;page_size=&amp;ordering=last_updated&amp;name=">nvidia/cuda on DockerHub</a>. In my case, I found <code>cuda:12.6.0-cudnn-devel-ubuntu20.04</code></p>
+<div class="highlight"><pre><span></span><code>podman<span class="w"> </span>pull<span class="w"> </span>nvidia/cuda:12.6.0-cudnn-devel-ubuntu20.04
+podman<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>--device<span class="w"> </span>nvidia.com/gpu<span class="o">=</span>all<span class="w"> </span>--security-opt<span class="o">=</span><span class="nv">label</span><span class="o">=</span>disable<span class="w"> </span>nvidia/cuda:12.6.0-cudnn-devel-ubuntu20.04<span class="w"> </span>nvidia-smi
 </code></pre></div>
 <p>The command requests the full GPU with index 0 and the first MIG device on GPU 1. The output should show only the UUIDs of the requested devices.</p>
 <p><img alt="podman runs cuda" src="../../media/podman-runs-cuda.png" /></p>
@@ -1145,7 +1173,7 @@ nvidia.com/gpu=all
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 29, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 30, 2024</span>
   </span>
 
     

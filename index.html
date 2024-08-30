@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.33">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.33">
     
     
       
@@ -291,6 +291,17 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="." class="md-nav__link md-nav__link--active">
         
   
@@ -300,6 +311,34 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#stack-choices-for-this-site" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stack choices for this site
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -805,6 +844,92 @@
 <li>IBM Cloud</li>
 </ul>
 <p>References are included to original source material. </p>
+<h2 id="stack-choices-for-this-site">Stack choices for this site</h2>
+<p>The technologies supported in this site are opinionated, in that they express choices that have been made through experience or recommendation. It is a mix of Microsoft and Open Source technologies and can change as needed by the project.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Category</strong></th>
+<th><strong>Primary technology</strong></th>
+<th><strong>Secondary technology</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Operating System</strong></td>
+<td><a href="https://learn.microsoft.com/en-us/windows/wsl/">WSL2 on Windows (Ubuntu)</a></td>
+<td>Red Hat Linux</td>
+</tr>
+<tr>
+<td><strong>Container</strong></td>
+<td><a href="https://podman.io/">Container Device Interface - Podman</a></td>
+<td>Docker</td>
+</tr>
+<tr>
+<td><strong>Container Orchestration</strong></td>
+<td><a href="https://docs.openshift.com/container-platform/4.16/welcome/index.html">OpenShift Container Platform</a></td>
+<td>Kubernetes</td>
+</tr>
+<tr>
+<td><strong>Developer container orchestration</strong></td>
+<td><a href="https://developers.redhat.com/products/openshift-local/overview">OpenShift Local</a></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>GPU</strong></td>
+<td>NVIDIA <a href="https://developer.nvidia.com/cuda-zone">CUDA</a> <a href="https://developer.nvidia.com/cudnn">cuDNN</a></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Scripting language</strong></td>
+<td>Bash</td>
+<td>PowerShell</td>
+</tr>
+<tr>
+<td><strong>Development language</strong></td>
+<td>Python 3 (Conda)</td>
+<td>TypeScript React NodeJS C#</td>
+</tr>
+<tr>
+<td><strong>Neural Networks</strong></td>
+<td><a href="https://pytorch.org/">PyTorch</a></td>
+<td>TensorFlow</td>
+</tr>
+<tr>
+<td><strong>Cloud</strong></td>
+<td>Azure</td>
+<td>IBM Cloud</td>
+</tr>
+<tr>
+<td><strong>Dev environment</strong></td>
+<td>Visual Studio Code<br/>Jupyter Notebook</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>DevOps</strong></td>
+<td>Azure DevOps Pipeline</td>
+<td>Cloud Native CI/CD <a href="https://tekton.dev/">Tekton</a></td>
+</tr>
+<tr>
+<td><strong>GitOps</strong></td>
+<td><a href="https://argo-cd.readthedocs.io/en/stable/">Argo</a></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Documentation</strong></td>
+<td><a href="https://www.markdownguide.org/">Markdown</a> <a href="">MKDocs</a></td>
+<td>WordPress</td>
+</tr>
+</tbody>
+</table>
+<p>Python libraries:</p>
+<ul>
+<li><a href="https://numpy.org/">NumPy</a></li>
+<li><a href="https://pandas.pydata.org/">Pandas</a></li>
+<li><a href="https://matplotlib.org/">matplotlib</a></li>
+<li><a href="https://seaborn.pydata.org/">seaborn statistical data visualization</a></li>
+<li><a href="https://scikit-learn.org/stable/index.html">scikit-learn</a></li>
+</ul>
 
 
 
@@ -827,7 +952,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 29, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 30, 2024</span>
   </span>
 
     
