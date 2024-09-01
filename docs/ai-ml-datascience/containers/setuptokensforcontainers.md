@@ -1,6 +1,6 @@
 # Set up your tokens, passwords, secrets for Podman
 
-WhyHow do you pass in the password to a database or a token to access an online service? You could simply a file when running the container and store the credentials there.
+How do you pass in the password to a database or a token to access an online service? You could simply a file when running the container and store the credentials there?
 
 If the container is exported into the image, the credentials would be exported as well. Anyone who has control over the image would be able to access the database.
 

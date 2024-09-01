@@ -20,14 +20,15 @@ nav:
     - Samples:
       - Text classification [GitHub]: https://github.com/brucedkyle/xolv-site/blob/main/nlm-pattern/text-classification/README.md
   - Deploy:
-      - Containers:
-        - Set up local Podman Image Registry [Red Hat]:  https://www.redhat.com/sysadmin/simple-container-registry
-        - Deploy to local registry: ./deploy/deploytolocalregistry.md
-        - Deploy to Azure:
+    - Overview: ./deploy/index.md
+    - Containers:
+      - Set up local Podman Image Registry [Red Hat]:  https://www.redhat.com/sysadmin/simple-container-registry
+      - Deploy to local registry: ./deploy/deploytolocalregistry.md
+      - Deploy to Azure:
           - Create Azure container registry (CLI) [Azure]: https://learn.microsoft.com/en-us/azure/container-instances/container-instances-tutorial-prepare-acr 
           - Deploy container to App Services [Azure]: https://learn.microsoft.com/en-us/azure/app-service/quickstart-custom-container?tabs=python&pivots=container-linux-vscode
-        - Deploy to OpenShift: 
-          - Using GitHub: ,/deploy/deploycontainer.md
+      - Deploy to OpenShift: 
+          - Using GitHub: ./deploy/deploycontainer.md
           - Without Dockerfile: ./ai-ml-datascience/deploy/deploycontainerwithoutDockerfile.md
 theme: 
   name: material
