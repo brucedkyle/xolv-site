@@ -23,7 +23,7 @@ The technologies supported in this site are opinionated, in that they express ch
 **GPU** | NVIDIA [CUDA](https://developer.nvidia.com/cuda-zone) [cuDNN](https://developer.nvidia.com/cudnn) | 
 **Scripting language** | Bash | PowerShell
 **Development language** | Python 3 (Conda) | TypeScript React NodeJS C#
-**Neural Networks** | [PyTorch](https://pytorch.org/) | TensorFlow
+**Neural Networks** | [PyTorch](https://pytorch.org/) <br> Keras | TensorFlow
 **Cloud** | Azure | IBM Cloud
 **Dev environment** | Visual Studio Code<br/>Jupyter Notebook |
 **DevOps** | Azure DevOps Pipeline | Cloud Native CI/CD [Tekton](https://tekton.dev/) 
@@ -37,4 +37,13 @@ Python libraries:
 - [matplotlib](https://matplotlib.org/)
 - [seaborn statistical data visualization](https://seaborn.pydata.org/)
 - [scikit-learn](https://scikit-learn.org/stable/index.html)
+- [transformers](https://huggingface.co/docs/transformers/index)
+
+Open Source datasets:
+
+- [Hugging Face datasets](https://huggingface.co/docs/datasets/tutorial)
+
+Large language models:
+
+- []
 
