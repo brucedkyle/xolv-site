@@ -12,7 +12,7 @@ The technologies supported in this site are opinionated, in that they express ch
 
 ## Docs
 
-The documentation is available: [https://brucedkyle.github.io/xolv-site/](https://brucedkyle.github.io/xolv-site/)
+The documentation is available: [https://www.xolv.info/](https://www.xolv.info/)
 
 ## Site
 
