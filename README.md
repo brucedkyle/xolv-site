@@ -10,6 +10,10 @@ References are included to original source material.
 
 The technologies supported in this site are opinionated, in that they express choices that have been made through experience or recommendation.
 
+## Docs
+
+The documentation is available: [https://brucedkyle.github.io/xolv-site/](https://brucedkyle.github.io/xolv-site/)
+
 ## Site
 
 This includes source code for:
