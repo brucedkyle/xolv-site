@@ -24,6 +24,7 @@ nav:
     - Tensorflow:
       - Set up Tensorflow [Medium]: https://towardsdatascience.com/tensorflow-gpu-installation-made-easy-use-conda-instead-of-pip-52e5249374bc
     - Samples:
+      - OpenAI hello notebook [GitHub]: https://github.com/brucedkyle/xolv-site/blob/main/nlm-pattern/openai-helloworld/README.md
       - Text classification [GitHub]: https://github.com/brucedkyle/xolv-site/blob/main/nlm-pattern/text-classification/README.md
       - Build a local AI co-pilot [IBM]: https://developer.ibm.com/tutorials/awb-local-ai-copilot-ibm-granite-code-ollama-continue/
   - Deployment:

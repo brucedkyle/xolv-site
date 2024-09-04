@@ -1,0 +1,13 @@
+name: openai-helloworld
+channels:
+  - conda-forge
+dependencies:
+  # always include
+  - notebook
+  - ipykernel
+  - ipywidgets
+  - pip
+  # openai
+  - conda-forge::openai
+  # set/get the api key
+  - python-dotenv 
