@@ -2,54 +2,70 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://xolv.info/</loc>
-         <lastmod>2024-09-03</lastmod>
+         <lastmod>2024-09-04</lastmod>
     </url>
     <url>
          <loc>https://xolv.info/ai-ml-datascience/</loc>
-         <lastmod>2024-09-03</lastmod>
+         <lastmod>2024-09-04</lastmod>
     </url>
     <url>
          <loc>https://xolv.info/ai-ml-datascience/containers/jupyterdockerstacks/</loc>
-         <lastmod>2024-09-03</lastmod>
+         <lastmod>2024-09-04</lastmod>
     </url>
     <url>
          <loc>https://xolv.info/ai-ml-datascience/containers/setupdocker/</loc>
-         <lastmod>2024-09-03</lastmod>
+         <lastmod>2024-09-04</lastmod>
     </url>
     <url>
          <loc>https://xolv.info/ai-ml-datascience/containers/setupdockersecrets/</loc>
-         <lastmod>2024-09-03</lastmod>
+         <lastmod>2024-09-04</lastmod>
     </url>
     <url>
          <loc>https://xolv.info/ai-ml-datascience/containers/setupsecretsforkubernetes/</loc>
-         <lastmod>2024-09-03</lastmod>
+         <lastmod>2024-09-04</lastmod>
     </url>
     <url>
          <loc>https://xolv.info/ai-ml-datascience/containers/setuptokensforcontainers/</loc>
-         <lastmod>2024-09-03</lastmod>
+         <lastmod>2024-09-04</lastmod>
+    </url>
+    <url>
+         <loc>https://xolv.info/ai-ml-datascience/gpu/installpytorch/</loc>
+         <lastmod>2024-09-04</lastmod>
     </url>
     <url>
          <loc>https://xolv.info/ai-ml-datascience/gpu/setupmlonwindows/</loc>
-         <lastmod>2024-09-03</lastmod>
+         <lastmod>2024-09-04</lastmod>
     </url>
     <url>
          <loc>https://xolv.info/ai-ml-datascience/gpu/setupnvidiadriver/</loc>
-         <lastmod>2024-09-03</lastmod>
+         <lastmod>2024-09-04</lastmod>
     </url>
     <url>
          <loc>https://xolv.info/ai-ml-datascience/notebook/setupsecrets/</loc>
-         <lastmod>2024-09-03</lastmod>
+         <lastmod>2024-09-04</lastmod>
     </url>
     <url>
          <loc>https://xolv.info/ai-ml-datascience/notebook/startjupyterinenv/</loc>
-         <lastmod>2024-09-03</lastmod>
+         <lastmod>2024-09-04</lastmod>
     </url>
     <url>
-         <loc>https://xolv.info/deploy/deploycontainer/</loc>
-         <lastmod>2024-09-03</lastmod>
+         <loc>https://xolv.info/deploy/</loc>
+         <lastmod>2024-09-04</lastmod>
+    </url>
+    <url>
+         <loc>https://xolv.info/deploy/createlocalregistry/</loc>
+         <lastmod>2024-09-04</lastmod>
+    </url>
+    <url>
+         <loc>https://xolv.info/deploy/deploycontaineropenshift/</loc>
+         <lastmod>2024-09-04</lastmod>
+    </url>
+    <url>
+         <loc>https://xolv.info/deploy/deploycontainerwithoutDockerfile/</loc>
+         <lastmod>2024-09-04</lastmod>
     </url>
     <url>
          <loc>https://xolv.info/deploy/deploytolocalregistry/</loc>
-         <lastmod>2024-09-03</lastmod>
+         <lastmod>2024-09-04</lastmod>
     </url>
 </urlset>
