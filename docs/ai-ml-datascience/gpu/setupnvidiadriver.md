@@ -36,6 +36,14 @@ Get-CimInstance win32_VideoController
 
 You will need to know the GPU information to select the right driver for your computer.
 
+### Hardware configuration in Edge
+
+You can see the current hardware configuration and driver support in Edge. Start your browser and type in this URL:
+
+```
+edge://gpu
+```
+
 ## Install the GPU Driver
 
 Download and install the NVIDIA CUDA enabled driver for WSL to use with your existing CUDA ML workflows. 
@@ -154,7 +162,7 @@ See:
 
 - [Getting Started with CUDA on WSL 2](https://docs.nvidia.com/cuda/wsl-user-guide/index.html#getting-started-with-cuda-on-wsl-2)
 - [How to Check What Graphics Card (GPU) Is in Your PC](https://www.howtogeek.com/414201/how-to-check-what-graphics-card-gpu-is-in-your-pc/)
-- [Enable NVIDIA CUDA on WSL](https://learn.microsoft.com/en-us/windows/ai/directml/gpu-cuda-in-wsl)
+- Microsoft documentation. [Enable NVIDIA CUDA on WSL](https://learn.microsoft.com/en-us/windows/ai/directml/gpu-cuda-in-wsl)
 - Red Hat documentation: [Installing Podman and the NVIDIA Container Toolkit](https://docs.nvidia.com/ai-enterprise/deployment-guide-rhel-with-kvm/0.1.0/podman.html)
 - [Get started with GPU acceleration for ML in WSL](https://learn.microsoft.com/en-us/windows/wsl/tutorials/gpu-compute)
 

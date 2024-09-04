@@ -14,7 +14,6 @@ When you have walked through the steps, the prototype will have been set up for 
 
 You will need:
 
-
 - To have Git enabled for your project
 - [Conda](https://www.anaconda.com/products/distribution) or [miniconda](https://docs.anaconda.com/miniconda/#quick-command-line-install) installed
 - Set up your development computer for using its NVIDIA GPU. See [Install NVIDIA GPU display driver](/ai-ml-datascience/gpu/setupnvidiadriver/)
@@ -109,6 +108,18 @@ conda info --envs
 
 ```bash
 conda activate project
+```
+
+### Test the CUDA environment
+
+Run `cuda_test.py` from the command line.
+
+```bash
+python ./cuda_test.py
+```
+
+### Run the notebook
+```
 jupyter notebook
 ```
 
@@ -139,8 +150,9 @@ Once you are completed, you may want to save out the exact versions of the packa
 ```bash
 conda env export --no-builds > environment.yml 
 ```
-
+<!--
 TODO Update PIP
+-->
 
 ### Deactivate
 
@@ -149,9 +161,10 @@ When you are done, call
 ```bash
 conda deactivate
 ```
-
+<!--
 ## Start Notebook in Podman
-
+TODO
+-->
 
 ## References
 

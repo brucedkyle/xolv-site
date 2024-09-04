@@ -1,0 +1,13 @@
+name: test-environment
+channels:
+  - conda-forge
+dependencies:
+  - notebook
+  # basic data analysis
+  - numpy
+  - pandas
+  - seaborn
+  # machine learning
+  - scikit-learn
+  # for environment variables 
+  - python-dotenv 

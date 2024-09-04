@@ -8,8 +8,9 @@ Those tokens, secrets, passwords might not necessarily be things which you want 
 
 In this tutorial you will see how to use a `.env` file to make it easier to share with teammates while allowing them to set their own environmental variables, but not necessarily check in and let the whole world see.
 
-> [!IMPORTANT]
-> This demonstrates how to store the tokens in the clear. 
+!!! important "Tokens are in the clear"
+
+    This demonstrates how to store the tokens in the clear. 
 
 ## Set .gitignore
 
