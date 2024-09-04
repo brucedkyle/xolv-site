@@ -49,7 +49,26 @@ Alternatively, you can use Python command line. Start `python` then you can set 
 
 ## Set and get password in your Jupyter Notebook
 
+When you use Jupyter Notebook, the same passwords are not used. You will need to set the password in your Notebook, then you can delete the line of code (so you do not check in your password). You should set your password as a variable and not show it, and then use as needed. For example,
 
+Set the password:
+
+```python
+import keyring
+keyring.get_keyring()
+keyring.set_password("system", "username", "password")
+```
+
+Delete the line. Get the password.
+
+```python
+import keyring
+keyring.get_keyring()
+the_password=keyring.get_password("system", "username")
+# to show the password to be sure you are doing it right: print(the_password)
+```
+
+The password is stored locally in the clear.
 
 ## References
 

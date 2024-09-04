@@ -4,7 +4,7 @@
 
 This site provides a wiki-like approach to topic of interest to:
 
-- Solution architects on Azure
+- Microsoft Azure
 - Data science
 - IBM Cloud
 
@@ -26,7 +26,7 @@ The technologies supported in this site are opinionated, in that they express ch
 **Neural Networks** | [PyTorch](https://pytorch.org/) <br> Keras | TensorFlow
 **Cloud** | Azure | IBM Cloud
 **Dev environment** | Visual Studio Code<br/>Jupyter Notebook |
-**DevOps** | Azure DevOps Pipeline | Cloud Native CI/CD [Tekton](https://tekton.dev/) 
+**DevOps** | Azure DevOps Pipeline | Cloud Native CI/CD [Tekton](https://tekton.dev/) <br/> Jenkins
 **GitOps** | [Argo](https://argo-cd.readthedocs.io/en/stable/) |
 **Documentation** | [Markdown](https://www.markdownguide.org/) [MKDocs]() | WordPress
 

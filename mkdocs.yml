@@ -15,11 +15,15 @@ nav:
       - Jupyter Docker Stacks: ./ai-ml-datascience/containers/jupyterdockerstacks.md
       - Set up GPU for Podman: ./ai-ml-datascience/gpu/setupmlonwindows.md
       - Set up secrets on Podman: ./ai-ml-datascience/containers/setuptokensforcontainers.md
+    - Keys and secrets:
+      - Keyring [GitHub]: https://github.com/brucedkyle/xolv-site/tree/main/nlm-pattern/keys/README.md
+      - encpass [GitHub]: https://github.com/brucedkyle/xolv-site/tree/main/nlm-pattern/encpass-key/README.md
     - Tensorflow:
       - Set up Tensorflow [Medium]: https://towardsdatascience.com/tensorflow-gpu-installation-made-easy-use-conda-instead-of-pip-52e5249374bc
     - Samples:
       - Text classification [GitHub]: https://github.com/brucedkyle/xolv-site/blob/main/nlm-pattern/text-classification/README.md
-  - Deploy:
+      - Build a local AI co-pilot [IBM]: https://developer.ibm.com/tutorials/awb-local-ai-copilot-ibm-granite-code-ollama-continue/
+  - Deployment:
     - Overview: ./deploy/index.md
     - Containers:
       - Set up local Podman Image Registry [Red Hat]:  https://www.redhat.com/sysadmin/simple-container-registry
@@ -28,8 +32,10 @@ nav:
           - Create Azure container registry (CLI) [Azure]: https://learn.microsoft.com/en-us/azure/container-instances/container-instances-tutorial-prepare-acr 
           - Deploy container to App Services [Azure]: https://learn.microsoft.com/en-us/azure/app-service/quickstart-custom-container?tabs=python&pivots=container-linux-vscode
       - Deploy to OpenShift: 
-          - Using GitHub: ./deploy/deploycontainer.md
-          - Without Dockerfile: ./ai-ml-datascience/deploy/deploycontainerwithoutDockerfile.md
+          - Using GitHub: ./deploy/deploycontaineropenshift.md
+          - Without Dockerfile: ./deploy/deploycontainerwithoutDockerfile.md
+    - Models:
+      - Deploying Machine Learning Models [KD Nuggets]: https://www.kdnuggets.com/deploying-machine-learning-models-a-step-by-step-tutorial
 theme: 
   name: material
   features:
