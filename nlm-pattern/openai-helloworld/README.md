@@ -58,6 +58,7 @@ See:
 - [Introduction to prompt engineering](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/prompt-engineering) 
 - [Prompt engineering techniques](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/advanced-prompt-engineering) 
 - [OpenAI Cookbook](https://github.com/openai/openai-cookbook)
+- [Prompt examples](https://platform.openai.com/docs/examples)
 
 ## References
 

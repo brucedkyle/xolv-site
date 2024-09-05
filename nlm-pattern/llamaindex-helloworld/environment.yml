@@ -1,0 +1,13 @@
+name: llamaindex-helloworld
+channels:
+  - conda-forge
+dependencies:
+  # always include
+  - notebook
+  - ipykernel
+  - ipywidgets
+  - pip
+  # llamaIndex
+  - llama-index
+  # openai
+  # - conda-forge::openai

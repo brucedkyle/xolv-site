@@ -1,0 +1,18 @@
+name: chat-with-data
+channels:
+  - conda-forge
+dependencies:
+  # always include
+  - notebook
+  - ipykernel
+  - ipywidgets
+  - pip
+  # openai
+  - conda-forge::openai
+  # other stuff
+  - pypdf2
+  - langchain
+  - llama-index
+  - gradio
+  # set/get the api key
+  - python-dotenv 
