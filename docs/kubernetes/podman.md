@@ -1,20 +1,24 @@
-# Podman
+# Getting started with Podman
 
-Podman is a container engine that's compatible with the OCI Containers specification. Podman is part of RedHat Linux, but can also be installed on other distributions.
+<img style="float: right;" alt="" src="./media/podman-2-196w-172h.png" />
+
+[Podman](https://www.redhat.com/en/topics/containers/what-is-podman) is a container engine that's compatible with the OCI Containers specification. Podman is part of RedHat Linux, but can also be installed on other distributions, including Windows and MacOS.
+
+The biggest argument for using Podman over Docker is am eye toward security. Two of Podman's primary features will attract you. 
+
+- Podman does not run as a daemon, meaning it doesn't rely on a process with root privileges to run containers.
+- Podman can run containers without root access. It means that you do not need superuser privileges to mange containers.
+
+## Podman key features
 
 Docker has been the go-to containerization tool for years, but Podman is emerging as a strong alternative. Podman offers a few advantages:
 
 - **Rootless Containers**. Run containers without needing root privileges, enhancing security. [Learn more about rootless containers](https://opensource.com/article/19/2/how-does-rootless-podman-work).
-
-- **Systemd Integration**. Better integration with Linux's init system, systemd. For Linux users, this is a significant benefit. Podman's compatibility with systemd offers better process management and orchestration. [Learn more about systemd[(https://www.linux.com/training-tutorials/understanding-and-using-systemd/)].
-
+- **Systemd Integration**. Better integration with Linux's init system, systemd. For Linux users, this is a significant benefit. Podman's compatibility with systemd offers better process management and orchestration. [Learn more about systemd](https://www.linux.com/training-tutorials/understanding-and-using-systemd/).
 - **Follows Open Standards**. Fully compatible with [Open Container Initiative (OCI)](https://opencontainers.org/) standards. Podman is [OCI-compliant](https://opencontainers.org/), which means it adheres to industry standards for container images, making it easier to switch between different container technologies. [Learn more about OCI](https://opencontainers.org/about/overview/).
-
-So, if you're looking to break free from Docker's grasp, Podman is worth considering.
-
-## Working with containers and images
-
-Podman's CLI is deliberately aligned with Docker's. That means that you can use familiar Docker commands to interact with Podman containers:
+- **Deploy to Kubernetes**. Deploy pods from Podman Desktop to local or remote Kubernetes contexts using automatically-generated YAML config.
+- **Podman is compatible with Docker's command line interface**. Meaning, moving from Docker to Podman will not require any major changes to your existing code. This also means that you can just substitute the docker command with podman and it just works.
+- **Podman is daemon-less**. Docker's core runs as a daemon (dockerd). Meaning, it is always running in the background, managing the containers. Meanwhile, Podman is like your average program; once you perform an action (start/stop a container) using Podman, it exits.
 
 ## Prerequisites
 
@@ -42,7 +46,7 @@ For information on how to use Podman on a remote client, see [Podman Remote clie
 
 Before using Podman, you need to initialize and start a Podman machine:
 
-```
+```bash
 podman machine init
 podman machine start
 ```
@@ -105,6 +109,12 @@ To better understand these advantages, consider traditional resource management 
 
 For more information, see [Rootless Tutorial](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md)
 
+## Podman, Buildah, and Skopeo
+
+Podman is a modular container engine, so it must work alongside tools like [Buildah](https://www.redhat.com/en/topics/containers/what-is-buildah) and [Skopeo](https://www.redhat.com/en/topics/containers/what-is-skopeo) to build and move its containers. 
+
+With Buildah, you can build containers either from scratch or by using an image as a starting point. Skopeo moves container images between different types of storage systems, allowing you to copy images between registries like docker.io, quay.io, and your internal registry or between different types of storage on your local system. 
+
 ## Next steps
 
 Get the [Podman Basics Cheat Sheet](https://developers.redhat.com/cheat-sheets/podman-basics-cheat-sheet?intcmp=701f20000012ngPAAQ)
@@ -115,3 +125,4 @@ Get the [Podman Basics Cheat Sheet](https://developers.redhat.com/cheat-sheets/p
 - [Making Visual Studio Code devcontainer work properly on rootless Podman](https://medium.com/@guillem.riera/making-visual-studio-code-devcontainer-work-properly-on-rootless-podman-8d9ddc368b30)
 - [Run Podman on Windows: How-to instructions](https://www.redhat.com/sysadmin/run-podman-windows)
 - [What Is Podman and How Does It Differ from Docker?](https://www.howtogeek.com/devops/what-is-podman-and-how-does-it-differ-from-docker/)
+- [What is Podman?](https://www.redhat.com/en/topics/containers/what-is-podman)
