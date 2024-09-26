@@ -28,7 +28,52 @@ nav:
       - Text classification [GitHub]: https://github.com/brucedkyle/xolv-site/blob/main/nlm-pattern/text-classification/README.md
       - Build a local AI co-pilot [IBM]: https://developer.ibm.com/tutorials/awb-local-ai-copilot-ibm-granite-code-ollama-continue/
   - Containers Kubernetes OpenShift:
-    - Podman: ./kubernetes/podman.md
+    - Containers:
+      - Podman: ./kubernetes/podman.md
+    - Kubernetes:
+      - Security: ./ocp/security.md
+    - OpenShift:
+      - Business value: ./ocp/value.md  
+      - Deployment guide~: https://ibm.github.io/production-gitops/infrastructure/infra-overview/
+      - Code patterns - Containers: 
+        - IBM~: https://developer.ibm.com/technologies/containers/patterns/
+        - Microsoft~: https://learn.microsoft.com/en-us/azure/architecture/guide/choose-azure-container-service
+        - Red Hat~: https://www.redhat.com/architect/portfolio/
+        - Multicloud development~: https://developer.ibm.com/?q=%20&DWContentType[0]=Code%20patterns&DWPractice[0]=AIOps
+      - Workshops:
+        - OCP architecture workshop: ./ocp/architecture.md
+        - Operators hands-on: ./ocp/operators.md
+        - Deploy sample web service~: https://www.redhat.com/sysadmin/deploy-web-service-openshift
+        - Install OpenShift Container Storage~: https://pages.github.ibm.com/dwakeman/random-thoughts/openshift/storage/ocs/
+        - Migrate from Kubernetes to OpenShift~: https://developer.ibm.com/learningpaths/migrate-kubernetes-openshift/
+        - Install EKC logging Operator: ./ocp/elasticsearch.md
+        - Deploy PostgreSQL: ./ocp/postgresql.md
+#        - Cloud Native Toolkit DevOps: ./ocp/devops.md
+        - Install Open Data Foundation (ODF) lab: ./ocp/odf.md
+        - GitOps for Advanced Cluster Management (RHACM): ./ocp/advancedclustermanagement.md
+        - Advanced Cluster Security (RHACS): ./ocp/clustersecurity.md
+        - Capacity planning~: https://www.ibm.com/cloud/architecture/articles/ibmaot-redhat-openshift/02-solutions-guide-capacity-planning-capacity-planning
+        - Sample applications: 
+          - Hello world~: https://developers.redhat.com/articles/2021/10/01/new-application-samples-red-hat-openshift-48#
+          - Persistent volume framework demo~: https://developers.redhat.com/blog/2020/10/22/persistent-storage-in-action-understanding-red-hat-openshifts-persistent-volume-framework#
+          - Stock trader~: ./ocp/stocktrader.md
+      - OpenShift on AWS~: https://www.rosaworkshop.io/
+      - OCP on Azure:
+        - Introduction to Azure: ./ocp/azure.md
+        - Install ARO Cluster: ./ocp/aro.md 
+        - Install OCP on Azure for Ops: ./azure/OpsInstallOpenShiftOnAzure.md
+        - ARO Solution Architecture~: https://www.redhat.com/architect/portfolio/detail/32
+        - Install a Bastion on Azure: ./azure/SetupBastionEnvironment.md
+        - Install OCP on Azure: ./azure/DevInstallOpenShiftOnAzure.md
+        - Install CP4D on Azure: ./azure/CreateCP4DonAzure.md
+        - Sample OCP/Cloud Pak architecture: ./azure/media/openshiftwithaiops.svg 
+      - Red Hat OpenShift Local:
+        - About: ./ocp/local.md
+        - Install on Windows: ./ocp/openshiftlocal/install.md
+        - Uninstall on Windows: ./ocp/openshiftlocal/uninstall.md
+      - MicroShift (OpenShift on Edge devices):
+        - About MicroShift~: https://next.redhat.com/project/microshift/
+        - Home GitOps Lab Environment~: https://cloud.redhat.com/blog/how-to-build-a-home-kubernetes-lab-with-microshift-and-gitops
   - Deployment:
     - Overview: ./deploy/index.md
     - Containers:

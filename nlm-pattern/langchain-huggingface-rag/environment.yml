@@ -1,0 +1,26 @@
+name: langchain-huggingface-rag
+channels:
+  - pytorch
+  - conda-forge
+  - nvidia
+dependencies:
+  # always include
+  - notebook
+  - ipykernel
+  - ipywidgets
+  - pip
+  # hugging face
+  - transformers
+  - sentence-transformers
+  - datasets
+  - huggingfacee-hub
+  # langchain
+  - langchain
+  - pytorch:faiss-cpu #vector store
+  # pytorch
+  - pytorch
+    #torchvision 
+    #torchaudio 
+  - pytorch:pytorch-cuda=12.4
+  # set/get the api key
+  - python-dotenv 
