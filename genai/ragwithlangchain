@@ -1,0 +1,51 @@
+# Overview of Retrieval Augmented Generation (RAG) with LangChain
+
+_Retrieval Augmented Generation (RAG)_ is a pattern that works with pretrained _Large Language Models (LLM)_ and your own data to generate responses.
+
+RAG provides the model with access to external data sources, mitigating hallucinations by introducing factual context and overcoming knowledge cut-offs by incorporating current information.
+
+The pattern enchances LLMs by tapping into external data sources, including knowledge bases, documents, databases, and the internet, during runtime. This is invaluable for enhancing language models with external data, bridging knowledge gaps not covered in their training data.
+
+For detailed background on RAG, see [Efficient Information Retrieval with RAG Workflow](https://medium.com/international-school-of-ai-data-science/efficient-information-retrieval-with-rag-workflow-afdfc2619171).
+
+In this article, you will learn the steps in building out a RAG using LangChain. You will be able to mix and match:
+
+- Document load and transform
+- Text embedding
+- Vector store
+- Retrievers
+- Cache results
+
+## RAG Workflow with LangChain
+
+LangChain, a comprehensive platform for natural language processing, plays a pivotal role in making RAG models accessible and efficient. 
+
+A typical RAG application has two main components:
+
+1. **Indexing**. A pipeline for ingesting data from a source and indexing it. This usually happens offline.
+2. **Retrieval and generation**. The actual RAG chain, which takes the user query at run time and retrieves the relevant data from the index, then passes that to the model.
+
+Implementing it involves several steps in LangChain.
+
+<!-- replace with https://python.langchain.com/v0.2/docs/tutorials/rag/#concepts ? -->
+
+![langchain workflow](media/langchainworkflow.png)
+from [Efficient Information Retrieval with RAG Workflow](https://medium.com/international-school-of-ai-data-science/efficient-information-retrieval-with-rag-workflow-afdfc2619171)
+
+**Document Loaders and Transformers**. LangChain includes _document loaders_ to retrieve documents from many sources, such as S3 buckets, public websites, HTML, PDF, code. Use _transformers_ to prepare the documents for retrieval, especially for splitting large documents into smaller chucks.
+
+**Text Embedding Models** in LangChain creates vector representations of text, capturing its semantic meaning. This vectorization enables efficient retrieval of similar pieces of text. Text embedding providers and methods, such as OpenAI, Cohere, and Hugging Face.
+
+**Vector Store**. Databases are needed for storing and searching these embeddings. LangChain offers integrations with over 50 different vector stores.
+
+**Retrievers** provide the interface to retrieve documents relevant to a query. These retrievers can use vector stores as their backbone but also support other types of retrievers. LangChain’s retrievers offer flexibility in customizing retrieval algorithms, ranging from simple semantic search to advanced methods that enhance performance.
+
+**Caching Embeddings** provide for the temporary storage of embeddings, reducing the need for recomputation and improving overall performance.
+
+**Q&A**
+
+## Reference
+
+- [Build a Retrieval Augmented Generation (RAG) App](https://python.langchain.com/v0.2/docs/tutorials/rag/)
+- [Efficient Information Retrieval with RAG Workflow](https://medium.com/international-school-of-ai-data-science/efficient-information-retrieval-with-rag-workflow-afdfc2619171)
+- [Implementing RAG with Langchain and Hugging Face](https://medium.com/@akriti.upadhyay/implementing-rag-with-langchain-and-hugging-face-28e3ea66c5f7)
