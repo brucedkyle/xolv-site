@@ -88,6 +88,24 @@ nav:
           - Without Dockerfile: ./deploy/deploycontainerwithoutDockerfile.md
     - Models:
       - Deploying Machine Learning Models [KD Nuggets]: https://www.kdnuggets.com/deploying-machine-learning-models-a-step-by-step-tutorial
+  - Enterprise Architectures:
+    - Portfolio architectures: ./portfolioarchitectures.md
+    - Supply chain:
+          - Supply chain optimization: ./supplychain/supplychain.md
+          - Demand risk: ./supplychain/demandrisk.md
+          - Loss management: ./supplychain/lossmanagement.md
+          - Timeliness: ./supplychain/timeliness.md
+          - Perfect order: ./supplychain/perfectorder.md
+          - Intelligent order: ./supplychain/intelligentorder.md
+          - Returns: ./supplychain/returns.md
+          - Disaster readiness: ./supplychain/disasterreadiness.md
+    - Sustainable enterprise:
+        - Environmental management systems: ./sustainableenterprise/sustainableenterprise.md
+        - Transparent supply: ./sustainableenterprise/transparentsupply.md
+        - Smart energy: ./sustainableenterprise/energy.md
+        - Green IT: ./sustainableenterprise/greenit.md
+        - Sustainable facility: ./sustainableenterprise/sustainablefacility.md
+        - Asset lifecycle: ./sustainableenterprise/assetlifecycle.md
 theme: 
   name: material
   features:
