@@ -1,0 +1,26 @@
+{
+    "name": "Dev on Podman",
+    "build":{
+        "dockerfile": "Containerfile",
+        "context": "../"
+    }, 
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "quarto.quarto",
+                "ms-azuretools.vscode-docker",
+                "ms-python.python",
+                "ms-vscode-remote.remote-containers",
+                "yzhang.markdown-all-in-one",
+                "redhat.vscode-yaml",
+                "ms-toolsai.jupyter",
+                "hediet.vscode-drawio"
+            ]
+        }
+    },
+    "runArgs": [
+        "--userns=keep-id:uid=1000,gid=1000"
+       ],
+    "containerUser": "vscode",
+    "updateRemoteUserUID": true 
+}

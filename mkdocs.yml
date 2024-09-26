@@ -27,6 +27,8 @@ nav:
       - OpenAI hello notebook [GitHub]: https://github.com/brucedkyle/xolv-site/blob/main/nlm-pattern/openai-helloworld/README.md
       - Text classification [GitHub]: https://github.com/brucedkyle/xolv-site/blob/main/nlm-pattern/text-classification/README.md
       - Build a local AI co-pilot [IBM]: https://developer.ibm.com/tutorials/awb-local-ai-copilot-ibm-granite-code-ollama-continue/
+  - Containers Kubernetes OpenShift:
+    - Podman: ./kubernetes/podman.md
   - Deployment:
     - Overview: ./deploy/index.md
     - Containers:

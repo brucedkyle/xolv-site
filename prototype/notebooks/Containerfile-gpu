@@ -1,0 +1,11 @@
+# syntax=docker/dockerfile:1
+
+FROM quay.io/jupyter/pytorch-notebook:cuda12-pytorch-2.4.1
+ADD environment.yml ./environment.yml
+RUN conda init
+RUN conda env create -f environment.yml
+# Pull the environment name out of the environment.yml
+#RUN conda activate text_classification
+RUN echo source activate $(head -1 environment.yml | cut -d' ' -f2)> ~/.bashrc
+ENV PATH /opt/conda/envs/$(head -1 environment.yml | cut -d' ' -f2)/bin:$PATH
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root"]

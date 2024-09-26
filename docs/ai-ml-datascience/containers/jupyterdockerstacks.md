@@ -59,5 +59,5 @@ See [OpenShift example](https://github.com/jupyter/docker-stacks/tree/main/examp
 
 ## Reference
 
-- [Jyptyer Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/index.html)
+- [Juptyer Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/index.html)
 - [CUDA enabled Jupyter Docker Image](https://blog.jupyter.org/cuda-enabled-jupyter-docker-images-8a9f8b8f2158)

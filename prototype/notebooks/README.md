@@ -119,7 +119,8 @@ python ./cuda_test.py
 ```
 
 ### Run the notebook
-```
+
+```bash
 jupyter notebook
 ```
 

@@ -1,0 +1,14 @@
+name: project
+channels:
+  - conda-forge
+dependencies:
+  # basic data analysis
+  - numpy
+  - pandas
+  - seaborn
+  # other system requirements
+  - pip
+  - python-dotenv # for "secretish" environment variables 
+  # optional for pip
+  # - pip:
+  #  - -r requirements.txt
