@@ -38,7 +38,3 @@ For more information, see [Configure Nested Virtualization](https://learn.micros
 ## References
 
 [RHEL 8 Hyper-V Quick Install](https://developers.redhat.com/rhel8/install-rhel8-hyperv#)
-
-## Compiled
-
-March 14, 2023

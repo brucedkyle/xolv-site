@@ -27,7 +27,7 @@ You can then delete your user's hidden `.crc` directory, `C:\Users\john.doe\.crc
 
 ## Update
 
-To update, reinstall. See  [Install OpenShift Local](./install).
+To update, reinstall. See  [Install OpenShift Local](./install.md).
 
 ## References
 

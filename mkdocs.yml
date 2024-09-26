@@ -29,13 +29,14 @@ nav:
       - Build a local AI co-pilot [IBM]: https://developer.ibm.com/tutorials/awb-local-ai-copilot-ibm-granite-code-ollama-continue/
   - Containers Kubernetes OpenShift:
     - Containers:
+      - RHEL on Windows: ./ocp/rhel/installrhel.md
       - Podman: ./kubernetes/podman.md
     - Kubernetes:
       - Security: ./ocp/security.md
     - OpenShift:
       - Business value: ./ocp/value.md  
       - Deployment guide~: https://ibm.github.io/production-gitops/infrastructure/infra-overview/
-      - Code patterns - Containers: 
+      - Code patterns: 
         - IBM~: https://developer.ibm.com/technologies/containers/patterns/
         - Microsoft~: https://learn.microsoft.com/en-us/azure/architecture/guide/choose-azure-container-service
         - Red Hat~: https://www.redhat.com/architect/portfolio/

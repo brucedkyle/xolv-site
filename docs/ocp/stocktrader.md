@@ -10,10 +10,6 @@ The following diagram shows how the microservices fit together, and what externa
 
 Note that only the services with a solid border are mandatory - the rest are all optional, only installed when you want to enable additional bells and whistles.
 
-## TraderLite
-
-You may want to install [TraderLite](../cp4i/traderlite.md) instead. It updates a few features of Stock Trader. It uses Maria DB instead of DB2. It provides much the same implemenation aimed at demonstrating **Cloud Pak for Integration**.
-
 ## Install using HELM
 
 See [General preparation for installation](https://github.com/IBMStockTrader/stocktrader-helm#general-preparation-for-installation)
