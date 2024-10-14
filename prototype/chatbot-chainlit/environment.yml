@@ -1,0 +1,14 @@
+name: chatbot
+channels:
+  - conda-forge
+dependencies:
+  - langchain==0.1.12
+  - langchain-openai==0.0.8
+  - pydantic==2.6.1
+  - notebook
+  # other system requirements
+  - pip
+  - python-dotenv # for "secretish" environment variables 
+  # optional for pip
+  - pip:
+    - chainlit
