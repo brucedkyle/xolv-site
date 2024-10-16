@@ -34,3 +34,5 @@ See:
 
 - [Data Analysis and Preparation](./examples/Food_Hub_Project.html)
 - [Decision Tree](./examples/Bank_Loan_Customer_Analysis.html)
+- [Bagging, Random Forest, AdaBoost, GradientBoost](./examples/Credit_Card_Users_Churn_Prediction.html)
+- [Neural Network](./examples/Bank_Churn_Prediction.html)
