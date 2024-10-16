@@ -9,16 +9,12 @@ nav:
     - Jupyter Notebooks:
       - Set up Jupyter Notebook: ./ai-ml-datascience/notebook/startjupyterinenv.md
       - Set up secrets locally: ./ai-ml-datascience/notebook/setupsecrets.md
-    - GPU:
+    - Set up Dev, GPU, Notebook:
       - Set up GPU on dev: ./ai-ml-datascience/gpu/setupnvidiadriver.md
-    - Containers:
       - Jupyter Docker Stacks: ./ai-ml-datascience/containers/jupyterdockerstacks.md
       - Set up GPU for Podman: ./ai-ml-datascience/gpu/setupmlonwindows.md
       - Set up secrets on Podman: ./ai-ml-datascience/containers/setuptokensforcontainers.md
-    - Keys and secrets:
       - Dotenv: ./ai-ml-datascience/notebook/setupsecrets.md
-      - Keyring [GitHub]: https://github.com/brucedkyle/xolv-site/tree/main/nlm-pattern/keys/README.md
-      - encpass [GitHub]: https://github.com/brucedkyle/xolv-site/tree/main/nlm-pattern/encpass-key/README.md
     - Pytorch:
       - Set up Pytorch: ./ai-ml-datascience/gpu/installpytorch.md
     - Tensorflow:
