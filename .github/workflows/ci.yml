@@ -30,11 +30,6 @@ jobs:
       - run: pip install mkdocs-material 
       - run: pip3 install mkdocs-git-revision-date-localized-plugin
       - run: mkdocs gh-deploy --force
-  build_and_deploy_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-    runs-on: ubuntu-latest
-    name: Build and Deploy Job
-    steps:
       - uses: actions/checkout@v3
         with:
           submodules: true  
