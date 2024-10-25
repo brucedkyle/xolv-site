@@ -1,4 +1,4 @@
-# Large Language Models
+# Understanding Transformers: Large Language Models
 
 _Large Language Models (LLMs)_ like those belonging to the GPT, and BERT family have demonstrated a significant advancement over earlier neural network architectures such as Recurrent Neural Networks (RNNs) in the field of Natural Language Processing (NLP). 
 
@@ -17,8 +17,8 @@ Large language models are 'large' because they are pre-trained with a large numb
 
 The LLM family includes:
 
-- BERT (NLU – Natural language understanding)
-- GPT (NLG – natural language generation)
+- [BERT](https://www.analyticsvidhya.com/blog/2023/12/berts-attention-mechanism/) (NLU – Natural language understanding). BERT (Bidirectional Encoder Representations from Transformers) is a pre-trained Natural Language Process model developed by Google. It is based on the Transformer architecture, which uses self-attention mechanisms to capture relationships between words in a model. It’s bidirectional because it considers both the right and left context of each word when encoding its representation. Also, BERT has been pre-trained on a large text corpus and can be fine-tuned on specific NLP tasks like classification and question answering. 
+- [GPT](https://www.analyticsvidhya.com/blog/2024/04/what-is-gpt-you-wont-believe-whats-inside/) (NLG – natural language generation). GPTs can produce new, coherent text based on the patterns learned from massive datasets. They are “pre-trained” because they undergo an initial training phase on vast amounts of text data. This allows them to acquire a broad knowledge base before being fine-tuned for specific tasks.
 - T5 (Summarization)
 
 The specific LLM models such as OpenAI’s models (GPT3.5, GPT-4 – Billions of parameters), PaLM2, Llama 2, etc demonstrate exceptional performance in various NLP / text processing tasks mentioned before. Some of these LLMs are open-sourced (Llama 2) while other ain’t (such as ChatGPT models).
@@ -97,6 +97,7 @@ such as the T5 (Text-to-Text Transfer Transformer) model. Developed by Google in
 
 ## References
 
+- [Understanding Transformers: A Deep Dive into NLP’s Core Technology](https://www.analyticsvidhya.com/blog/2024/04/understanding-transformers-a-deep-dive-into-nlps-core-technology/)
 - [A Comprehensive Overview of Large Language Model](https://arxiv.org/pdf/2307.06435)
 - [Large Language Models (LLMs): Types, Examples](https://vitalflux.com/large-language-models-concepts-examples/)
 

@@ -1,0 +1,350 @@
+# This pipeline deploys resources: resource group, storage account, key vault, cosmosdb
+
+trigger:
+ - none
+#  branches:
+#    include:
+#    - master
+#    - infrastra
+
+#  paths:
+#    include:
+#    - infrastructure/* 
+
+parameters:
+- name: subscriptionId
+  type: string
+  default: '76d5aee2-6a43-4ec9-8248-77f888fb917c'
+  displayName: Subscription ID (looks like a guid)
+  values:
+  - 76d5aee2-6a43-4ec9-8248-77f888fb917c
+  - 9f241d6e-16e2-4b2b-a485-cc546f04799b
+- name: projectName
+  type: string
+  default: 'project42'
+  displayName: Short project name (about 10 chars, not spaces)
+- name: location
+  type: string
+  default: 'westus2'
+  displayName: 'Location (region in lowercase no spaces)'
+  values:
+  - westus2
+- name: environment
+  type: string
+  default: 'dev'
+  displayName: 'Environment - dev, prod, test, stag'
+  values:
+  - dev
+  - prod
+  - test
+  - stag
+- name: 'instanceNumber'
+  type: string
+  default: '00'
+  displayName: 'Instance number (00-99)'
+- name: team
+  type: string
+  default: 'gigeconomy'
+  displayName: 'Team name (for tags)'
+- name: azureResourceManagerConnection
+  default: 'Project42-int'
+  displayName: 'Project settings | Pipeline | Service connections'
+  type: string
+  values: 
+  - 'Project42-int'
+  - 'ResourceManager-connection'
+- name: pathToResources
+  default: 'infrastructure' #no trailing '/'
+  type: string
+  displayName: 'Path to the top infrastructure folder in the repo'
+  values:
+  - infrastructure
+  - .
+- name: storageSKU
+  default: Standard_LRS
+  type: string
+  values:
+  - Standard_LRS
+  - Standard_GRS
+  - Standard_RAGRS
+  # not available in all regions: Standard_ZRS, Premium_LRS, Premium_ZRS, Standard_GZRS, Standard_RAGZRS
+
+variables:
+  instanceNumber: ${{ parameters.instanceNumber }}
+  environment: ${{ parameters.environment }}
+  CostCenter: 'Project42'
+  team: '${{ parameters.team }}'
+  storageAccountType: ${{ parameters.storageSKU }}
+  azureResourceManagerConnection: ${{ parameters.azureResourceManagerConnection }}
+  pathToResources: ${{ parameters.pathToResources }}
+  cosmosDBdatabaseName: 'cosmosdata'
+  cosmosDBAccountName: 'cosmos-sql-${{ parameters.projectName }}-$(instanceNumber)'
+  cosmosRegions: '[ "${{ parameters.location }}" ]' #json array
+  location: '${{ parameters.location }}'
+  tags: '{ "Location":"$(location)","Environment":"$(environment)","Team":"$(team)","Instance":"$(instanceNumber)" }'
+
+stages:
+  - stage: DeployResources
+    jobs:
+    - job: 'DeployInfrastructure'
+      pool:
+        vmImage: 'ubuntu-latest'
+      variables:
+        projectName: ${{ parameters.projectName }}
+        location: ${{ parameters.location }}
+        resourceGroupName: ''
+
+      steps: 
+        # GET NAME FOR RESOURCES
+        - pwsh: |
+            Write-Output 'subscription  ${{ parameters.subscriptionid }} -projectName  $(projectName) -environment $(environment) -instanceNumber $(instanceNumber) -resourceLocation $(location)'
+            Write-Output 'pathToResource $(pathToResources)'
+            Write-Output '$(tags)'
+          displayName: 'show name convention variables'
+        - task: PowerShell@2
+          inputs:
+            filePath: '$(pathToResources)/namingconvention/Get-ResourceBaseName.ps1'
+            arguments: '-ProjectName $(projectName) -Environment $(environment) -InstanceNumber $(instanceNumber) -Location $(location) -IsStorage $false -ResourcePrefix "rg"'
+        - pwsh: |
+            Write-Output "resource name: $(resourceName)"
+            Write-Output "##vso[task.setvariable variable=resourceGroupName;]$(resourceName)"
+            Write-Output "resource name group: $(resourceGroupName) : ${{ variables.resourceGroupName }}"
+          displayName: 'Get resource name'
+      # CREATE RESOURCE GROUP
+        - pwsh: |
+            Write-Output '-resourceGroupName $(resourceGroupName) -resourceGroupLocation $(location) '
+            Write-Output '-resourceGroupTags $(tags)'
+          displayName: "show resource group overrideParameters"
+        - task: AzureResourceManagerTemplateDeployment@3
+          inputs:
+            deploymentScope: 'Subscription'
+            azureResourceManagerConnection: '$(azureResourceManagerConnection)'
+            subscriptionId: ${{ parameters.subscriptionid }}
+            location: '$(location)'
+            templateLocation: 'Linked artifact'
+            csmFile: '$(pathToResources)/resourcegroup/azuredeploy.json'
+            csmParametersFile: '$(pathToResources)/resourcegroup/azuredeploy.parameters.json'
+            overrideParameters: '-resourceGroupName  $(resourceGroupName) -resourceGroupLocation $(location) -resourceGroupTags $(tags)'
+            deploymentMode: 'Incremental'
+          displayName: "Create resource group"
+        # overrideParameters: '-resourceGroupName $(resourceGroupName) -resourceGroupLocation $(location) -resourceGroupTags @{ ${{ variables.tags }} -lockResourceGroup $(lockResourceGroup) -principalId $(objectIdForResourceGroupContributors)}'
+      # CREATE STORAGE ACCOUNT
+        - task: PowerShell@2
+          inputs:
+            filePath: '$(pathToResources)/namingconvention/Get-ResourceBaseName.ps1'
+            arguments: '-ProjectName $(projectName) -Environment $(environment) -InstanceNumber $(instanceNumber) -Location $(location) -IsStorage $true -ResourcePrefix "st"'
+        - pwsh: 'Write-Output -resourceBaseName $(resourceName) -storageAccountType $(storageAccountType)'
+          displayName: 'Get storage account resource name'
+        - task: AzureResourceManagerTemplateDeployment@3
+          displayName: "Deploy storage account"
+          inputs:
+            deploymentScope: 'Resource Group'
+            azureResourceManagerConnection: '$(azureResourceManagerConnection)'
+            subscriptionId: ${{ parameters.subscriptionid }}
+            action: 'Create Or Update Resource Group'
+            resourceGroupName: '$(resourceGroupName)'
+            location: '$(location)'
+            templateLocation: 'Linked artifact'
+            csmFile: '$(pathToResources)/storageaccount/azuredeploy.json'
+            csmParametersFile: '$(pathToResources)/storageaccount/azuredeploy.parameters.json'
+            overrideParameters: '-resourceBaseName $(resourceName) -resourceTags $(tags)'
+            deploymentMode: 'Incremental'
+            deploymentOutputs: resourceOutput
+          # overrideParameters: '-resourceBaseName $(resourceName) -storageAccountType $(storageAccountType)'
+        - pwsh: Write-Output '$(resourceOutput)'
+        - pwsh: |
+            $armOutputObj =  ConvertFrom-Json '$(resourceOutput)'
+            $armOutputObj.PSObject.Properties | ForEach-Object {
+              $keyname = $_.Name
+              $value = $_.Value.value
+              Write-Output "keyname = [$keyname]  value = [$value]"
+              Write-Output "##vso[task.setvariable variable=$keyName;]$value"
+              Write-Output "##vso[task.setvariable variable=$keyName;isOutput=true]$value" 
+            }
+        - pwsh: |
+            Write-Output '$(storageAccountName)'
+            Write-Output '$(storageAccountResourceId)'
+          displayName: 'Storage Account Name and id'
+      # CREATE KEY VAULT ACCOUNT
+        - task: PowerShell@2
+          inputs:
+            filePath: '$(pathToResources)/namingconvention/Get-ResourceBaseName.ps1'
+            arguments: '-ProjectName $(projectName) -Environment $(environment) -InstanceNumber $(instanceNumber) -Location $(location) -IsStorage $false -ResourcePrefix kv'
+          displayName: Key Vault Params
+        - pwsh: Write-Output -resourceBaseName $(resourceName)
+        - task: AzureResourceManagerTemplateDeployment@3
+          inputs:
+            deploymentScope: Resource Group
+            azureResourceManagerConnection: $(azureResourceManagerConnection)
+            subscriptionId: ${{ parameters.subscriptionid }}
+            action: Create Or Update Resource Group
+            resourceGroupName: $(resourceGroupName)
+            location: $(location)
+            templateLocation: Linked artifact
+            csmFile: $(pathToResources)/keyvault/azuredeploy.json
+            csmParametersFile: $(pathToResources)/keyvault/azuredeploy.parameters.json
+            overrideParameters: '-vaultName $(resourceName) -resourceTags $(tags)'
+            deploymentMode: Incremental
+            deploymentOutputs: keyVaultOutput
+          displayName: Deploy key vault
+        - pwsh: Write-Output '$(keyVaultOutput)'
+          displayName: Key vault json
+        - pwsh: |
+            $armOutputObj =  ConvertFrom-Json '$(keyVaultOutput)'
+            $armOutputObj.PSObject.Properties | ForEach-Object {
+              $keyname = $_.Name
+              $value = $_.Value.value
+              Write-Output "keyname = [$keyname]  value = [$value]"
+              Write-Output "##vso[task.setvariable variable=$keyName;]$value"
+              Write-Output "##vso[task.setvariable variable=$keyName;isOutput=true]$value" 
+            }
+          displayName: Key vault deployment results
+        - pwsh: |
+            Write-Output '$(keyVaultId)'
+            Write-Output '$(vaultName)'
+          displayName: Key vault deployment result items
+       #CREATE SIGNALR
+        - task: PowerShell@2
+          inputs:
+            filePath: $(pathToResources)/namingconvention/Get-ResourceBaseName.ps1
+            arguments: -ProjectName $(projectName) -Environment $(environment) -InstanceNumber $(instanceNumber) -Location $(location) -IsStorage $false -ResourcePrefix sigr
+        - pwsh: Write-Output -signalRName $(resourceName)
+          displayName: Get signalr resource name
+        - task: AzureResourceManagerTemplateDeployment@3
+          displayName: Deploy SignalR
+          inputs:
+            deploymentScope: Resource Group
+            azureResourceManagerConnection: $(azureResourceManagerConnection)
+            subscriptionId: ${{ parameters.subscriptionid }}
+            action: Create Or Update Resource Group
+            resourceGroupName: $(resourceGroupName)
+            location: $(location)
+            templateLocation: Linked artifact
+            csmFile: $(pathToResources)/signalr/azuredeploy.json
+            csmParametersFile: $(pathToResources)/signalr/azuredeploy.parameters.json
+            overrideParameters: -signalRName $(resourceName) -resourceTags $(tags)
+            deploymentMode: Incremental
+            deploymentOutputs: resourceOutput
+        - pwsh: |
+            Write-Output '$(resourceOutput)'
+          displayName: SignalR output json
+        - pwsh: |
+            $armOutputObj =  ConvertFrom-Json '$(resourceOutput)'
+            $armOutputObj.PSObject.Properties | ForEach-Object {
+              $keyname = $_.Name
+              $value = $_.Value.value
+              Write-Output "keyname = [$keyname]  value = [$value]"
+              Write-Output "##vso[task.setvariable variable=$keyName;]$value"
+              Write-Output "##vso[task.setvariable variable=$keyName;isOutput=true]$value" 
+            }
+          displayName: SignalR output vars
+        - pwsh: |
+            Write-Output '$(resoureName)'
+          displayName: SignalR deploy resourceName
+      # CREATE DIAGNOSTIC STORAGE ACCOUNT FOR REDIS
+        - task: PowerShell@2
+          inputs:
+            filePath: $(pathToResources)/namingconvention/Get-ResourceBaseName.ps1
+            arguments: '-ProjectName $(projectName) -Environment $(environment) -InstanceNumber $(instanceNumber) -Location $(location) -IsStorage $true -ResourcePrefix "diag"'
+          displayName: Diagnostic storage account for redis inputs
+        - pwsh: 'Write-Output -resourceBaseName $(resourceName) -storageAccountType $(storageAccountType)'
+          displayName: 'Get storage account resource name'
+        - task: AzureResourceManagerTemplateDeployment@3
+          displayName: "Deploy diagnostic storage account"
+          inputs:
+            deploymentScope: 'Resource Group'
+            azureResourceManagerConnection: '$(azureResourceManagerConnection)'
+            subscriptionId: ${{ parameters.subscriptionid }}
+            action: 'Create Or Update Resource Group'
+            resourceGroupName: '$(resourceGroupName)'
+            location: '$(location)'
+            templateLocation: 'Linked artifact'
+            csmFile: '$(pathToResources)/storageaccount/azuredeploy.json'
+            csmParametersFile: '$(pathToResources)/storageaccount/azuredeploy.parameters.json'
+            overrideParameters: '-resourceBaseName $(resourceName) -resourceTags $(tags)'
+            deploymentMode: 'Incremental'
+            deploymentOutputs: resourceOutput
+          # overrideParameters: '-resourceBaseName $(resourceName) -storageAccountType $(storageAccountType)'
+        - pwsh: |
+            Write-Output '$(resourceOutput)'
+          displayName: Diagnostic storage account output
+        - pwsh: |
+            $armOutputObj =  ConvertFrom-Json '$(resourceOutput)'
+            $armOutputObj.PSObject.Properties | ForEach-Object {
+              $keyname = $_.Name
+              $value = $_.Value.value
+              Write-Output "keyname = [$keyname]  value = [$value]"
+              Write-Output "##vso[task.setvariable variable=$keyName;]$value"
+              Write-Output "##vso[task.setvariable variable=$keyName;isOutput=true]$value" 
+            }
+          displayName: 'Diagnostic Storage Account results'          
+        - pwsh: |
+            Write-Output '$(storageAccountName)'
+            Write-Output '$(storageAccountResourceId)'
+          displayName: 'Diagnostic Storage Account Name and id'
+        #REDIS
+        - task: PowerShell@2
+          inputs:
+            filePath: '$(pathToResources)/namingconvention/Get-ResourceBaseName.ps1'
+            arguments: '-ProjectName $(projectName) -Environment $(environment) -InstanceNumber $(instanceNumber) -Location $(location) -IsStorage $false -ResourcePrefix "cache"'
+          displayName: 'Get Redis Name' 
+        - pwsh: 'Write-Output -resourceBaseName $(resourceName) -existingDiagnosticsStorageAccountId $(storageAccountResourceId)'
+          displayName: 'Print Redis Params'
+        - task: AzureResourceManagerTemplateDeployment@3
+          displayName: "Deploy redis cache"
+          inputs:
+            deploymentScope: 'Resource Group'
+            azureResourceManagerConnection: '$(azureResourceManagerConnection)'
+            subscriptionId: ${{ parameters.subscriptionid }}
+            action: 'Create Or Update Resource Group'
+            resourceGroupName: '$(resourceGroupName)'
+            location: '$(location)'
+            templateLocation: 'Linked artifact'
+            csmFile: '$(pathToResources)/redis/azuredeploy.json'
+            csmParametersFile: '$(pathToResources)/redis/azuredeploy.parameters.json'
+            overrideParameters: '-redisCacheName $(resourceName) -existingDiagnosticsStorageAccountId $(storageAccountResourceId) -resourceTags $(tags)'
+            deploymentMode: 'Incremental'
+            deploymentOutputs: resourceOutput
+        - pwsh: Write-Output '$(resourceOutput)'
+        - pwsh: |
+            $armOutputObj =  ConvertFrom-Json '$(resourceOutput)'
+            $armOutputObj.PSObject.Properties | ForEach-Object {
+              $keyname = $_.Name
+              $value = $_.Value.value
+              Write-Output "keyname = [$keyname]  value = [$value]"
+              Write-Output "##vso[task.setvariable variable=$keyName;]$value"
+              Write-Output "##vso[task.setvariable variable=$keyName;isOutput=true]$value" 
+            }
+          displayName: Redis deployment output
+      # CREATE COSMOSDB ACCOUNT
+        - pwsh: |
+            Write-Output '-accountName $(cosmosDBAccountName) -regions $(cosmosRegions) -databaseName $(cosmosDBdatabaseName)'
+          displayName: Cosmos params
+        - task: AzureResourceManagerTemplateDeployment@3
+          displayName: Deploy CosmosDB account
+          inputs:
+            deploymentScope: Resource Group
+            azureResourceManagerConnection: $(azureResourceManagerConnection)
+            subscriptionId: ${{ parameters.subscriptionid }}
+            action: 'Create Or Update Resource Group'
+            resourceGroupName: '$(resourceGroupName)'
+            location: '$(location)'
+            templateLocation: 'Linked artifact'
+            csmFile: '$(pathToResources)/cosmosdb/azuredeploy.json'
+            csmParametersFile: '$(pathToResources)/cosmosdb/azuredeploy.parameters.json'
+            overrideParameters: '-accountName $(cosmosDBAccountName) -regions $(cosmosRegions)  -databaseName $(cosmosDBdatabaseName) -resourceTags $(tags)'
+            deploymentMode: 'Incremental'
+            deploymentOutputs: resourceOutput
+        - pwsh: Write-Output '$(resourceOutput)'
+        - pwsh: |
+            $armOutputObj =  ConvertFrom-Json '$(resourceOutput)'
+            $armOutputObj.PSObject.Properties | ForEach-Object {
+              $keyname = $_.Name
+              $value = $_.Value.value
+              Write-Output "keyname = [$keyname]  value = [$value]"
+              Write-Output "##vso[task.setvariable variable=$keyName;]$value"
+              Write-Output "##vso[task.setvariable variable=$keyName;isOutput=true]$value" 
+            }
+        - pwsh: |
+            Write-Output '$(resoureName)'
+          displayName: 'CosmosDB name and connectionstring'

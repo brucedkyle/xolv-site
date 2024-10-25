@@ -1,0 +1,128 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "accountName": {
+      "value": "cosmos-sql-neu-testme-94"
+    },
+    "regions": {
+      "value": [
+        "northeurope",
+        "westeurope"
+      ]
+    },
+    "databaseName": {
+      "value": "cosmosdatabase"
+    },
+    "containers": {
+      "value": [
+        {
+          "id": "firstContainer",
+          "partitionKey": {
+            "paths": [
+              "/myPartitionKey1"
+            ],
+            "kind": "Hash"
+          },
+          "indexingPolicy": {
+            "indexingMode": "consistent",
+            "includedPaths": [
+              {
+                "path": "/*"
+              }
+            ],
+            "excludedPaths": [
+              {
+                "path": "/myPathToNotIndex1/*"
+              }
+            ],
+            "compositeIndexes": [
+              [
+                {
+                  "path": "/name1",
+                  "order": "ascending"
+                },
+                {
+                  "path": "/ag1e",
+                  "order": "descending"
+                }
+              ]
+            ],
+            "spatialIndexes": [
+              {
+                "path": "/path/to/geojson/property1/?",
+                "types": [
+                  "Point",
+                  "Polygon",
+                  "MultiPolygon",
+                  "LineString"
+                ]
+              }
+            ]
+          },
+          "defaultTtl": 86400,
+          "uniqueKeys": [
+            {
+              "paths": [
+                "/phoneNumber1"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "secondContainer",
+          "partitionKey": {
+            "paths": [
+              "/myPartitionKey2"
+            ],
+            "kind": "Hash"
+          },
+          "indexingPolicy": {
+            "indexingMode": "consistent",
+            "includedPaths": [
+              {
+                "path": "/*"
+              }
+            ],
+            "excludedPaths": [
+              {
+                "path": "/myPathToNotIndex2/*"
+              }
+            ],
+            "compositeIndexes": [
+              [
+                {
+                  "path": "/name2",
+                  "order": "ascending"
+                },
+                {
+                  "path": "/age2",
+                  "order": "descending"
+                }
+              ]
+            ],
+            "spatialIndexes": [
+              {
+                "path": "/path/to/geojson/property2/?",
+                "types": [
+                  "Point",
+                  "Polygon",
+                  "MultiPolygon",
+                  "LineString"
+                ]
+              }
+            ]
+          },
+          "defaultTtl": 86400,
+          "uniqueKeys": [
+            {
+              "paths": [
+                "/phoneNumber2"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

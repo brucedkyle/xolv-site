@@ -1,0 +1,98 @@
+# deploy key vault
+trigger:
+    - none
+
+   
+parameters:
+   - name: subscriptionId
+     type: string
+     default: '76d5aee2-6a43-4ec9-8248-77f888fb917c'
+     displayName: Subscription ID (looks like a guid)
+     values:
+     - 76d5aee2-6a43-4ec9-8248-77f888fb917c
+     - 9f241d6e-16e2-4b2b-a485-cc546f04799b
+   - name: 'resourceGroupName'
+     displayName: 'Resource Group Name (resource group must exist)'
+     type: string
+     default: 'rg-wus2-project42-test-99'
+   - name: projectName
+     type: string
+     default: 'project42'
+     displayName: Short project name (about 10 chars, not spaces)
+   - name: location
+     type: string
+     default: 'westus2'
+     displayName: 'Location (region in lowercase no spaces)'
+     values:
+     - westus2
+   - name: environment
+     type: string
+     default: 'dev'
+     displayName: 'Environment - dev, prod, test, stag'
+     values:
+     - dev
+     - prod
+     - test
+     - stag
+   - name: 'resourceName'
+     displayName: Resource Name
+     default: kv-wus2-project42-test-99 #24 chars or shorter, cannot end in a hyphen, unique
+   - name: team
+     type: string
+     default: 'gigeconomy'
+     displayName: 'Team name (for tags)'
+   - name: azureResourceManagerConnection
+     default: 'Project42-int'
+     displayName: 'Project settings | Pipeline | Service connections'
+     type: string
+     values: 
+     - 'Project42-int'
+     - 'ResourceManager-connection'
+   - name: pathToResources
+     default: 'infrastructure' #no trailing '/'
+     type: string
+     displayName: 'Path to the top infrastructure folder in the repo'
+     values:
+     - infrastructure
+     - .
+
+variables: 
+  resourceGroupName: ${{ parameters.resourceGroupName }}
+  resourceName: '${{ parameters.resourceName }}'
+  location: '${{ parameters.location }}'
+  tags: '{ "Location":"$(location)","Environment":"${{ parameters.environment }}" }'
+  pathToResources: ${{ parameters.pathToResources }}
+pool:
+    vmImage: 'ubuntu-latest'
+  
+steps:
+  # CREATE KEYVAULT ACCOUNT
+    - task: AzureResourceManagerTemplateDeployment@3
+      displayName: "Deploy Key vault account"
+      inputs:
+        deploymentScope: 'Resource Group'
+        azureResourceManagerConnection: '${{ parameters.azureResourceManagerConnection }}'
+        subscriptionId: ${{ parameters.subscriptionid }}
+        action: 'Create Or Update Resource Group'
+        resourceGroupName: '$(resourceGroupName)'
+        location: '$(location)'
+        templateLocation: 'Linked artifact'
+        csmFile: '$(pathToResources)/keyvault/azuredeploy.json'
+        csmParametersFile: '$(pathToResources)/keyvault/azuredeploy.parameters.json'
+        overrideParameters: '-vaultName $(resourceName) -resourceTags $(tags)'
+        deploymentMode: 'Incremental'
+        deploymentOutputs: resourceOutput
+    - pwsh: Write-Output '$(resourceOutput)'
+    - pwsh: |
+        $armOutputObj =  ConvertFrom-Json '$(resourceOutput)'
+        $armOutputObj.PSObject.Properties | ForEach-Object {
+          $keyname = $_.Name
+          $value = $_.Value.value
+          Write-Output "keyname = [$keyname]  value = [$value]"
+          Write-Output "##vso[task.setvariable variable=$keyName;]$value"
+          Write-Output "##vso[task.setvariable variable=$keyName;isOutput=true]$value" 
+        }
+    - pwsh: |
+        Write-Output '$(resourceName)'
+        Write-Output '$(resourceId)'
+      displayName: 'Key Vault Name and id'

@@ -1,0 +1,81 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "keyVaultName": {
+        "type": "string",
+        "metadata": {
+          "description": "Specifies the name of the key vault."
+        }
+      },
+      "tenantId": {
+        "type": "string",
+        "defaultValue": "[subscription().tenantId]",
+        "metadata": {
+          "description": "Specifies the Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. Get it by using Get-AzSubscription cmdlet."
+        }
+      },
+      "objectId": {
+        "type": "string",
+        "defaultValue": "",
+        "metadata": {
+          "description": "The user accesses the key vault from any application registered in the tenant. Examples of this type of access include Azure PowerShell and the Azure portal. "
+        }
+      },
+      "applicationId": {
+        "type": "string",
+        "defaultValue": "",
+        "metadata": {
+          "description": "The application represents a service or background job. This identity is the most common scenario for applications that periodically need to access certificates, keys, or secrets from the key vault. "
+        }       
+      },
+      "secretsPermissions": {
+        "type": "array",
+        "defaultValue": [
+          "list"
+        ],
+        "metadata": {
+          "description": "Specifies the permissions to secrets in the vault. Valid values are: all, get, list, set, delete, backup, restore, recover, and purge."
+        }
+      },
+      "keysPermissions": {
+        "type": "array",
+        "defaultValue": [
+          "list"
+        ],
+        "metadata": {
+          "description": "Specifies the permissions to keys in the vault. Valid values are: Get, List, Update, Create, Import, Delete, Recover, Backup, and Restore"
+        }
+      },
+     "certificatesPermissions": {
+        "type": "array",
+        "defaultValue": [
+          "list"
+        ],
+        "metadata": {
+          "description": "Specifies the permissions to secrets in the vault. Valid values are: Get, List, Update, Create, Import, Delete, Recover, Backup, Restore, ManageContacts, ManageIssuers, GetIssuers, ListIssuers, SetIssuers, DeleteIssuers"
+        }
+      }
+    },
+    "resources": [
+      {
+        "type": "Microsoft.KeyVault/vaults/accessPolicies",
+        "name": "[concat(parameters('keyVaultName'), '/add')]",
+        "apiVersion": "2019-09-01",
+        "properties": {
+          "accessPolicies": [
+            {
+              "tenantId": "[parameters('tenantId')]",
+              "objectId": "[parameters('objectId')]",
+              "applicationId": "[parameters('applicationId')]",
+              "permissions": {
+                "secrets": "[parameters('secretsPermissions')]",
+                "keys": "[parameters('keysPermissions')]",
+                "certificates": "[parameters('certificatesPermissions')]"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }

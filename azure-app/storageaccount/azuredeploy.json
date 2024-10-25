@@ -1,0 +1,72 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "resourceBaseName": {
+      "type": "string",
+      "metadata": {
+        "description": "Specifies the name of the resource, including its prefix."
+      }
+    },
+    "storageAccountType": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "allowedValues": [
+        "Standard_LRS",
+        "Standard_GRS",
+        "Standard_ZRS",
+        "Premium_LRS"
+      ],
+      "metadata": {
+        "description": "Storage Account type"
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    },
+    "resourceTags": {
+      "type": "object",
+      "defaultValue": {
+        "Cost Center": "Admin"
+      }
+    }
+  },
+  "variables": {
+    "uniqueString": "[uniqueString(subscription().id, parameters('resourceBaseName'))]",
+    "storageAccountName": "[toLower(substring(replace(concat(parameters('resourceBaseName'), variables('uniqueString'), variables('uniqueString')), '-', ''), 0, 23) )]"
+  },
+  "resources": [
+    {
+      "apiVersion": "2019-06-01",
+      "kind": "StorageV2",
+      "location": "[parameters('location')]",
+      "name": "[variables('storageAccountName')]",
+      "properties": {
+        "supportsHttpsTrafficOnly": true
+      },
+      "sku": {
+        "name": "[parameters('storageAccountType')]"
+      },
+      "type": "Microsoft.Storage/storageAccounts",
+      "tags": "[parameters('resourceTags')]"
+    }
+  ],
+  "outputs": {
+    "storageAccountResourceId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Storage/storageAccounts',variables('storageAccountName'))]"
+    },
+    "storageAccountName": {
+      "type": "string",
+      "value": "[variables('storageAccountName')]"
+    },
+    "storageEndpoint": {
+      "type": "object",
+      "value": "[reference(variables('storageAccountName')).primaryEndpoints]"
+    }
+  }
+}

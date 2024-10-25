@@ -1,0 +1,51 @@
+# Resource group create
+# requires $(resourceName), $(subscriptionId), $(location) to be set in interface
+# tags require $(costCenter)
+
+trigger:
+- master
+
+parameters:
+  - name: 'subscriptionID'
+    displayName: 'Subscription ID (a GUID)'
+    type: string
+    default: '76d5aee2-6a43-4ec9-8248-77f888fb917c'
+  - name: 'resourceGroupName'
+    displayName: 'Resource Group Name'
+    type: string
+    default: "rg-wus2-project42-testwithtags-99"
+  - name: 'location'
+    displayName: 'Location'
+    type: string
+    default: 'westus2'
+  - name: 'lockResourceGroup'
+    displayName: 'Lock'
+    type: boolean
+    default: $false
+  - name: 'contributorsObjectId'
+    displayName: 'Object ID for Contriburors'
+    type: string
+    default: ''
+
+variables:
+  CostCenter: 'Project42'
+  tags: '{"Cost Center":"$(CostCenter)","Location"="${{ parameters.location }}", "Locked Resource Group":"${{ parameters.lockResourceGroup }}"}'
+  azureResourceManagerConnection: 'ResourceManager-connection'
+  pathToResources: 'infrastructure' #no trailing '/'
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Subscription'
+    azureResourceManagerConnection: '$(azureResourceManagerConnection)'
+    subscriptionId: ${{ parameters.subscriptionid }}
+    location: '${{ parameters.location }}'
+    templateLocation: 'Linked artifact'
+    csmFile: '$(pathToResources)/resourcegroup/azuredeploy.json'
+    csmParametersFile: '$(pathToResources)/resourcegroup/azuredeploy.parameters.json'
+    overrideParameters: '-resourceGroupName ${{ parameters.resourceGroupName }} -resourceGroupLocation ${{ parameters.location }} -resourceGroupTags $(tags)'
+    deploymentMode: 'Incremental'
+
+#    overrideParameters: '-resourceGroupName ${{ parameters.resourceGroupName }} -resourceGroupLocation ${{ parameters.location }} -lockResourceGroup ${{ parameters.lockResourceGroup }} -principalId ${{ parameters.contributorsObjectId }} -resourceGroupTags $(tags)'

@@ -1,0 +1,47 @@
+# Resource group create
+# requires $(resourceName), $(subscriptionId), $(location) to be set in interface
+# tags require $(costCenter)
+
+trigger:
+- none
+
+parameters:
+  - name: 'subscriptionID'
+    displayName: 'Subscription ID (a GUID)'
+    type: string
+    default: '9f241d6e-16e2-4b2b-a485-cc546f04799b'
+  - name: 'resourceGroupName'
+    displayName: 'Resource Group Name'
+    type: string
+    default: "rg-wus2-project42-test-99"
+  - name: 'location'
+    displayName: 'Location'
+    type: string
+    default: 'westus2'
+  - name: 'lockResourceGroup'
+    displayName: 'Lock'
+    type: boolean
+    default: $false
+  - name: 'contributorsObjectId'
+    displayName: 'Object ID for Contriburors'
+    type: string
+    default: ''
+
+variables:
+  - name: tags
+    value: '"Cost Center" = $(CostCenter) ; "Location"=${{ parameters.location }}'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Subscription'
+    azureResourceManagerConnection: 'ResourceManager-connection'
+    subscriptionId: ${{ parameters.subscriptionid }}
+    location: '${{ parameters.location }}'
+    templateLocation: 'Linked artifact'
+    csmFile: 'resourcegroup/azuredeploy.json'
+    overrideParameters: '-resourceGroupName ${{ parameters.resourceGroupName }} -resourceGroupLocation ${{ parameters.location }} -lockResourceGroup ${{ parameters.lockResourceGroup }} -principalId ${{ parameters.contributorsObjectId }} -resourceGroupTags @{ ${{ variables.tags }} }'
+    deploymentMode: 'Incremental'

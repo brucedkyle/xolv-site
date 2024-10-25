@@ -1,0 +1,39 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "keyVaultName": {
+            "type": "string",
+            "metadata": {
+                "description": "Specifies the name of the key vault."
+            }
+        },
+        "secretName": {
+            "type": "string",
+            "metadata": {
+                "description": "Specifies the name of the secret that you want to create."
+            }
+        },
+        "secretValue": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Specifies the value of the secret that you want to create."
+            }
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "comments": "https://docs.microsoft.com/en-us/azure/templates/microsoft.keyvault/2019-09-01/vaults/secrets",
+            "name": "[concat(parameters('keyVaultName'), '/', parameters('secretName'))]",
+            "apiVersion": "2019-09-01",
+            "properties": {
+                "contentType": "securestring",
+                "value": "[parameters('secretValue')]",
+                "attributes": {
+                    "enabled": true
+                }
+            }
+        }
+    ]
+}

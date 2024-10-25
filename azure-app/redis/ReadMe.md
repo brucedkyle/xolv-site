@@ -1,0 +1,1 @@
+From https://github.com/Azure/azure-quickstart-templates/blob/master/101-redis-cache/

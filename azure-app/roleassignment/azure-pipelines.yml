@@ -1,0 +1,95 @@
+# Assign permissions to resource group
+# requires $(resourceGroupName), $(subscriptionId), $(location) to be set in interface
+# requires resourceGroup to have been created
+
+trigger:
+- none
+
+parameters:
+  - name: subscriptionId
+    type: string
+    default: '76d5aee2-6a43-4ec9-8248-77f888fb917c'
+    displayName: Subscription ID (looks like a guid)
+    values:
+    - 76d5aee2-6a43-4ec9-8248-77f888fb917c
+    - 9f241d6e-16e2-4b2b-a485-cc546f04799b
+  - name: 'resourceGroupName'
+    displayName: 'Resource Group Name (resource group must exist)'
+    type: string
+    default: 'rg-wus2-project42-test-99'
+  - name: 'location'
+    displayName: 'Location'
+    type: string
+    default: 'westus2'
+  - name: azureResourceManagerConnection
+    default: 'Project42-int'
+    displayName: 'Project settings | Pipeline | Service connections'
+    type: string
+    values: 
+    - 'Project42-int'
+    - 'ResourceManager-connection'
+  - name: pathToResources
+    default: 'infrastructure' #no trailing '/'
+    type: string
+    displayName: 'Path to the top infrastructure folder in the repo'
+    values:
+    - infrastructure
+    - .
+  - name: roleDefinitionID
+    default: "acdd72a7-3385-48ef-bd42-f606fba81ae7"
+    displayName: 'Role Definition Id (default is "Reader")'
+    type: string
+  - name: principalID
+    default: "54c2ee1b-1a2e-474c-bf71-508fe9ca6591"
+    displayName: "Principal ID/Object ID"
+    type: string
+#  - name: 'scope'
+#    displayName: "Scope -- use Resource Group Id"
+#    type: string
+#    default: "/subscriptions/9f241d6e-16e2-4b2b-a485-cc546f04799b/resourceGroups/rg-wus-sampleproject-01"
+
+variables:
+  azureResourceManagerConnection: '${{ parameters.azureResourceManagerConnection }}'
+  pathToResources: '${{ parameters.pathToResources }}'
+  resourceGroupName: ${{ parameters.resourceGroupName }}
+  scope: '/subscriptions/${{ parameters.subscriptionId }}/resourceGroups/${{ parameters.resourceGroupName }}'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - pwsh: |
+      Write-Output '-scope $(scope)'
+      Write-Output '-roleDefinitionID ${{ parameters.roleDefinitionID }}'
+      Write-Output '-principalID ${{ parameters.principalID }}'
+    displayName: 'Peremissions parameters'
+# SET PERMISSION ON RESOURCE GROUP
+  - task: AzureResourceManagerTemplateDeployment@3
+    displayName: "Deploy storage account"
+    inputs:
+      deploymentScope: 'Resource Group'
+      azureResourceManagerConnection: '$(azureResourceManagerConnection)'
+      subscriptionId: ${{ parameters.subscriptionid }}
+      action: 'Create Or Update Resource Group'
+      resourceGroupName: '$(resourceGroupName)'
+      location: '${{ parameters.location }}'
+      templateLocation: 'Linked artifact'
+      csmFile: '$(pathToResources)/storageaccount/azuredeploy.json'
+      csmParametersFile: '$(pathToResources)/storageaccount/azuredeploy.parameters.json'
+      overrideParameters: '-scope $(scope) -roleDefinitionID ${{ parameters.roleDefinitionID }} -principalID ${{ parameters.principalID }}'
+      deploymentMode: 'Incremental'
+      deploymentOutputs: resourceOutput
+  - pwsh: Write-Output '$(resourceOutput)'
+  - pwsh: |
+      $armOutputObj =  ConvertFrom-Json '$(resourceOutput)'
+      $armOutputObj.PSObject.Properties | ForEach-Object {
+        $keyname = $_.Name
+        $value = $_.Value.value
+        Write-Output "keyname = [$keyname]  value = [$value]"
+        Write-Output "##vso[task.setvariable variable=$keyName;]$value"
+        Write-Output "##vso[task.setvariable variable=$keyName;isOutput=true]$value" 
+      }
+  - pwsh: |
+      Write-Output '$(storageAccountName)'
+      Write-Output '$(storageAccountResourceId)'
+    displayName: 'Storage Account Name and id'

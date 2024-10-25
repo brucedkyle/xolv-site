@@ -1,0 +1,40 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+parameters:
+- name: subscriptionId
+  type: string
+  default: 9f241d6e-16e2-4b2b-a485-cc546f04799b
+  displayName: Subscription ID (looks like a guid)
+- name: projectName
+  type: string
+  default: 'project42'
+- name: location
+  type: string
+  default: 'westus2'
+  displayName: 'Location (region in lowercase no spaces)'
+
+variables:
+  projectName: ${{ parameters.projectName }}
+  environment: dev
+  location: ${{ parameters.location }}
+  pathToResources: '.' #no trailing '/'
+steps:
+- task: PowerShell@2
+  inputs:
+    filePath: '$(pathToResources)/namingconvention/Get-ResourceBaseName.ps1'
+    arguments: '-ProjectName $(projectName) -Environment $(environment) -InstanceNumber 0 -Location $(location) -IsStorage $false -ResourcePrefix rg'
+- pwsh: "write-Output $(resourceName)"
+- task: PowerShell@2
+  inputs:
+    filePath: '$(pathToResources)/namingconvention/Get-ResourceBaseName.ps1'
+    arguments: '-ProjectName $(projectName) -Environment $(environment) -InstanceNumber 20 -Location $(location) -IsStorage $true -ResourcePrefix at'
+- pwsh: "write-Output $(resourceName)"
