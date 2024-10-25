@@ -50,7 +50,7 @@ parameters:
    displayName: 'Instance number (00-99)'
  - name: team
    type: string
-   default: 'gigeconomy'
+   default: 'project42'
    displayName: 'Team name (for tags)'
  - name: azureResourceManagerConnection
    default: 'Project42-int'
