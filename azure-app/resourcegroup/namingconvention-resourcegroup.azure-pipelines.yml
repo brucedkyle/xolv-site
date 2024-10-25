@@ -1,0 +1,55 @@
+# Resource group create
+# requires $(projectName), $(subscriptionId), $(resourceGroupName), $(location) to be set in interface
+# tags require $(costCenter)
+trigger:
+- none
+
+variables:
+  - name: tags
+    value: '"Cost Center" = $(CostCenter) ; "Location"=$(location)'
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: echo '-projectName $(projectName) -location $(location)'
+- script: echo '-tags ${{ variables.tags }}'
+- script: echo '-projectName $(projectName) -environment dev -resourceType $(resourceType) -instanceNumber $(instanceNumber) -resourceLocation ${{ variables.location }}'
+  displayName: "show name convention variables"
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Subscription'
+    azureResourceManagerConnection: 'ResourceManager-connection'
+    subscriptionId: '$(subscriptionId)'
+    location: $(location)
+    templateLocation: 'Linked artifact'
+    csmFile: 'namingconvention/azuredeploy.json'
+    overrideParameters: '-projectName $(projectName) -environment dev -resourceType $(resourceType) -instanceNumber $(instanceNumber) -resourceLocation ${{ variables.location }}'
+    deploymentMode: 'Incremental'
+    deploymentOutputs: nameOutput
+  displayName: 'Get resource name'
+
+
+- pwsh: |
+    $armOutputObj =  ConvertFrom-Json '$(nameOutput)'
+    $armOutputObj.PSObject.Properties | ForEach-Object {
+      $keyname = $_.Name
+      $value = $_.Value.value
+      Write-Output "keyname = [$keyname]  value = [$value]"
+      Write-Output "##vso[task.setvariable variable=$keyName;]$value"
+      Write-Output "##vso[task.setvariable variable=$keyName;isOutput=true]$value" 
+    }
+
+- pwsh: |
+    Write-Output '$(resourceName)'
+  displayName: "Print resource name"
+
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Subscription'
+    azureResourceManagerConnection: 'ResourceManager-connection'
+    subscriptionId: ${{ parameters.subscriptionid }}
+    location: '${{ parameters.location }}'
+    templateLocation: 'Linked artifact'
+    csmFile: 'resourcegroup/azuredeploy.json'
+    overrideParameters: '-resourceGroupName $(resourceName) -resourceGroupLocation $(location) -resourceGroupTags @{ ${{ variables.tags }} }'
+    deploymentMode: 'Incremental'

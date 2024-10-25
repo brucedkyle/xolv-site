@@ -1,0 +1,50 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "keyVaultName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the key vault"
+      }
+    },
+    "secretName": {
+      "type": "string",
+      "defaultValue": false,
+      "metadata": {
+        "description": "The name of the secret apps will use to access the secret in keyvault."
+      }
+    },
+    "storageAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the storage account"
+      }
+    },
+    "accountKeyIndex": {
+      "type": "int",
+      "defaultValue": 0,
+      "minValue": 0,
+      "maxValue": 1,
+      "metadata": {
+        "description": "Index of the key you want from the storage account (zero based)"
+      }
+    }
+  },
+  "variables": {
+  },
+  "resources": [
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "name": "[concat(parameters('keyVaultName'), '/', parameters('secretName'))]",
+      "apiVersion": "2019-09-01",
+      "properties": {
+        "contentType": "securestring",
+        "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2019-04-01').keys[parameters('accountKeyIndex')].value]",       
+        "attributes": {
+          "enabled": true
+        }
+      }
+    }
+  ]
+}

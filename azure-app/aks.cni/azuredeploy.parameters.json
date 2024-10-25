@@ -1,0 +1,48 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "resourceName": {
+        "value": "GEN-UNIQUE"
+        },
+    "dnsPrefix": {
+        "value": "project42"
+    },
+    "osDiskSizeGB": {
+        "value": 0
+    },
+    "agentCount": {
+        "value": 1
+    },
+    "agentVMSize": {
+        "value": "Standard_D2_v3"
+    },
+    "osType": {
+        "value": "Linux"
+    },
+    "kubernetesVersion": {
+        "value": "1.17.9"
+    },
+    "maxPods": {
+        "value": 30
+    },
+    "existingVirtualNetworkName": {
+        "value": "vnet-wus2-project42-test-99"
+    },
+    "existingVirtualNetworkResourceGroup": {
+        "value": "rg-wus2-project42-test-99"
+    },
+    "existingSubnetName": {
+        "value": "rg-wus2-project42-test-99"
+    },
+    "serviceCidr": {
+        "value": "10.0.0.0/16"
+    },
+    "dnsServiceIP": {
+        "value": "10.0.0.10"
+    },
+    "adminGroups": {
+        "value": []
+    }
+  }
+}

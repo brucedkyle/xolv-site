@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "roleDefinitionID": {
+      "type": "string",
+      "defaultValue": "acdd72a7-3385-48ef-bd42-f606fba81ae7",
+      "metadata": {
+        "description": "Specifies the role definition ID used in the role assignment. default is reader"
+      }
+    },
+    "principalId": {
+      "type": "string",
+      "metadata": {
+        "description": "Specifies the principal ID assigned to the role."
+      }
+    },
+    "scope": {
+      "type": "string",
+      "metadata": {
+        "description": "Specifies the scope (resource group or resource) assigned to the role."
+      },
+      "defaultValue": "[resourceGroup().id]"
+    }
+  },
+  "variables": {
+    // this creates an idempotent GUID for the role assignment. uses scope, principalId, and roleDefinitionId to create a unique name. 
+    "roleAssignmentName": "[guid(parameters('scope'), parameters('principalId'), parameters('roleDefinitionId'))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2020-04-01-preview",
+      "name": "[variables('roleAssignmentName')]",
+      "properties": {
+        "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', parameters('roleDefinitionId'))]",
+        "principalId": "[parameters('principalId')]",
+        "scope": "[parameters('scope')]"
+      }
+    }
+  ],
+  "outputs": {
+    "roleAssignmentName": {
+      "type": "string",
+      "value": "[variables('roleAssignmentName')]"
+    }
+  }
+}

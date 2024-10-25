@@ -1,0 +1,34 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceId": {
+            "type": "string",
+            "metadata": {
+                "description": "The resource Id."
+            }
+        },
+        "provider": {
+            "type": "string",
+            "metadata": {
+                "description": "The resource provider, such as 'Microsoft.DocumentDB' in 'Microsoft.DocumentDB/databaseAccounts'."
+            }
+        },
+        "resourceType": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "The resourceType, such as 'databaseAccounts' in 'Microsoft.DocumentDB/databaseAccounts'."
+            }
+        }
+    },
+    "variables": {
+        "apiVersion": "[providers(parameters('provider'), parameters('resourceType')).apiVersions[0]]"
+    },
+    "outputs": {
+        "objectId": {
+            "type": "string",
+            "value": " [reference(parameters('resourceId'), variables('apiVersion'), 'full').identity.principalId]"
+        }
+    }
+}

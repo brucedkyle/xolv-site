@@ -1,0 +1,52 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "publicIPResourceName": {
+            "defaultValue": "myAKSPublicIP",
+            "type": "string",
+            "metadata": {
+                "description": "Public IP resource name"
+              }
+        },
+        "location": {
+            "defaultValue": "[resourceGroup().location]",
+            "type": "string",
+            "metadata": {
+                "description": "Public IP resource location"
+              }       
+        },
+        "sku": {
+            "defaultValue": "Standard",
+            "type": "string",
+            "allowedValues": ["Basic", "Standard"],
+            "metadata": {
+                "description": "Public IP sku. Must match the load balancer sku in your AKS cluster"
+              }
+        },
+        "idleTimeoutInMinutes": {
+            "defaultValue": 4,
+            "type": "int",
+            "metadata": {
+                "description": "Public IP sku"
+              }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2020-05-01",
+            "name": "[parameters('publicIPResourceName')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Standard"
+            },
+            "properties": {
+                "publicIPAddressVersion": "IPv4",
+                "publicIPAllocationMethod": "Static",
+                "idleTimeoutInMinutes": "[parameters('idleTimeoutInMinutes')]"
+            }
+        }
+    ]
+}   
