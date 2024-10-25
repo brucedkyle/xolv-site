@@ -41,13 +41,16 @@ The following diagram illustrates a hybrid deployment where Kubernetes is a cent
 
 From this GitHub:
 
-- [Naming convention]()
-- Create [Resource Group]() with locks and access control
-- [Azure Storage account]()
-- [Azure Kubernetes Service (AKS) using CNI]() and [Azure Container Registry (ACR)]()
-- [CosmosDB]()
-- [Key Vault](), [Key Vault for Cosmos](), [Key Vault Permissions](), [Key Vault Secret](), [Key Vault for Storage]()
-- ARM template to [Retrieve Object ID]()
-- [Role Assignment]() 
-- [SignalR]()
-- [Virtual Network]()
+- [Naming convention](https://github.com/brucedkyle/xolv-site/tree/main/azure-app/namingconvention)
+- Create [Resource Group](https://github.com/brucedkyle/xolv-site/tree/main/azure-app/resourcegroup) with locks and access control
+- [Azure Storage account](https://github.com/brucedkyle/xolv-site/tree/main/azure-app/storageaccount)
+- [Azure Kubernetes Service (AKS) using CNI](https://github.com/brucedkyle/xolv-site/blob/main/azure-app/aks.cni) and [Azure Container Registry (ACR)](https://github.com/brucedkyle/xolv-site/tree/main/azure-app/containerregistry)
+- [Azure Functions](https://github.com/brucedkyle/xolv-site/tree/main/azure-app/functions)
+- [CosmosDB](https://github.com/brucedkyle/xolv-site/tree/main/azure-app/cosmosdb)
+- [Key Vault](https://github.com/brucedkyle/xolv-site/tree/main/azure-app/keyvault), [Key Vault for Cosmos](https://github.com/brucedkyle/xolv-site/tree/main/azure-app/keyvault.cosmos), [Key Vault Permissions](https://github.com/brucedkyle/xolv-site/tree/main/azure-app/keyvault.permissions), [Key Vault Secret](https://github.com/brucedkyle/xolv-site/tree/main/azure-app/keyvault.secret), [Key Vault for Storage](https://github.com/brucedkyle/xolv-site/tree/main/azure-app/keyvault.storage)
+- ARM template to [Retrieve Object ID](https://github.com/brucedkyle/xolv-site/tree/main/azure-app/objectid)
+- [Role Assignment](https://github.com/brucedkyle/xolv-site/tree/main/azure-app/roleassignment) 
+- [SignalR](https://github.com/brucedkyle/xolv-site/tree/main/azure-app/signalr)
+- [Virtual Network](https://github.com/brucedkyle/xolv-site/tree/main/azure-app/virtualnetwork)
+- [Public IP](https://github.com/brucedkyle/xolv-site/tree/main/azure-app/pip)
+- [Redis](https://github.com/brucedkyle/xolv-site/tree/main/azure-app/redis)
