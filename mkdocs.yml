@@ -31,6 +31,8 @@ nav:
       - RHEL on Windows: ./ocp/rhel/installrhel.md
       - Podman: ./kubernetes/podman.md
     - Kubernetes:
+      - Setup AKS using ARM template: ./azure/aks.md
+      - Setup AKS using Terraform: ./azure/aks-terraform.md
       - Security: ./ocp/security.md
     - OpenShift:
       - Business value: ./ocp/value.md  
@@ -76,11 +78,23 @@ nav:
         - Home GitOps Lab Environment~: https://cloud.redhat.com/blog/how-to-build-a-home-kubernetes-lab-with-microshift-and-gitops
   - Software Defined Infrastructure:
     - Overview: ./deploy/index.md
-    - Azure Resource Templates: ./azure/SampleARMwithScripts.md
+    - Templates & DevOps:
+      - Azure Resource Templates & DevOps: ./azure/SampleARMwithScripts.md
+    - Compliance using Landing Zone:
+      - Governance: ./azure/compliance/governance.md
+      - Landing Zone: ./azure/Landingzone.md
+      - Setup Subscription: ./azure/compliance/setup-subscription.md
+      - Setup Management Group: ./azure/compliance/setup-management-group.md
+      - Azure Policy: ./azure/compliance/azure-policy.md
+      - Regulatory Compliance: ./azure/compliance/regulatory-compliance.md
+      - Security Center: ./azure/compliance/security-center.md 
+      - Log Analytics for Compliance: ./azure/compliance/log-analytics.md
     - Containers:
       - Set up local Podman Image Registry [Red Hat]:  https://www.redhat.com/sysadmin/simple-container-registry
       - Deploy to local registry: ./deploy/deploytolocalregistry.md
       - Deploy to Azure:
+          - Setup AKS using ARM template: ./azure/aks.md
+          - Setup AKS using Terraform: ./azure/aks-terraform.md
           - Create Azure container registry (CLI) [Azure]: https://learn.microsoft.com/en-us/azure/container-instances/container-instances-tutorial-prepare-acr 
           - Deploy container to App Services [Azure]: https://learn.microsoft.com/en-us/azure/app-service/quickstart-custom-container?tabs=python&pivots=container-linux-vscode
       - Deploy to OpenShift: 
