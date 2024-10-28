@@ -1,6 +1,8 @@
 # Setting up Management Group for production in enterprise
 
-![org1](https://i0.wp.com/azuredays.com/wp-content/uploads/2020/05/org1.png?resize=294%2C265&ssl=1)Once you have set up your first subscription, you can set up your [Management Group](https://docs.microsoft.com/en-us/azure/governance/management-groups/overview).
+![org1](https://i0.wp.com/azuredays.com/wp-content/uploads/2020/05/org1.png?resize=294%2C265&ssl=1)
+
+Once you have set up your first subscription, you can set up your [Management Group](https://docs.microsoft.com/en-us/azure/governance/management-groups/overview).
 
 In Azure, management groups are a way to group your subscriptions. When you apply policies and governance to your management group, all of the subscriptions within a management group automatically inherit the conditions applied. Enterprises want management groups as a way to scale your operations no matter how many subscriptions you may have.
 
@@ -215,13 +217,3 @@ You will want to learn more about:
 ## References
 
 *   [Organize your resources with Azure management groups](https://docs.microsoft.com/en-us/azure/governance/management-groups/overview)
-
-### Share this:
-
-*   [Twitter](https://azuredays.com/2020/06/29/setting-up-management-group-for-production-in-enterprise/?share=twitter&nb=1 "Click to share on Twitter")
-*   [Facebook](https://azuredays.com/2020/06/29/setting-up-management-group-for-production-in-enterprise/?share=facebook&nb=1 "Click to share on Facebook")
-
-
-[Setting up your enterprise Azure subscription administrators](/2020/06/04/setting-up-your-enterprise-azure-subscription-administrators/?relatedposts_hit=1&relatedposts_origin=2309&relatedposts_position=1&relatedposts_hit=1&relatedposts_origin=2309&relatedposts_position=1 "Setting up your enterprise Azure subscription administrators")June 4, 2020In "Azure"
-
-[Setting up Security Center for production in enterprise](/2020/06/18/setting-up-security-center-for-production-in-enterprise/?relatedposts_hit=1&relatedposts_origin=2309&relatedposts_position=2&relatedposts_hit=1&relatedposts_origin=2309&relatedposts_position=2 "Setting up Security Center for production in enterprise")June 18, 2020In "Azure"

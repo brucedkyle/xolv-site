@@ -1,6 +1,6 @@
 # Sample Azure Resource Manager (ARM) best practice templates
 
-The ARM templates provided as defaults through the Azure portal for various resources are not particularly extensible. And in some few cases, the defaults may not pass security checks and comply with basic policies.
+<img style="float: right; width: 20%; padding-inline: 6px" src="./media/azure_arm.png">The ARM templates provided as defaults through the Azure portal for various resources are not particularly extensible. And in some few cases, the defaults may not pass security checks and comply with basic policies.
 
 The following links take you to my GitHub site for:
 

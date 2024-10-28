@@ -1,6 +1,7 @@
 # Setting up Log Analytics workspace for production in enterprise
 
-![icon_1.0.1195.1535](https://i0.wp.com/azuredays.com/wp-content/uploads/2020/06/icon_1.0.1195.1535.png?resize=196%2C196&ssl=1)Operations and security are central in any cloud deployment. It should be top of mind in each of your cloud deployments.
+<img style="float: right; width: 20%; padding-inline: 6px" src="https://i0.wp.com/azuredays.com/wp-content/uploads/2020/06/icon_1.0.1195.1535.png?resize=196%2C196&ssl=1">
+Operations and security are central in any cloud deployment. It should be top of mind in each of your cloud deployments.
 
 Enabling your operations team to find and fix errors, to build practices around scaling your data are essential to having a successful Azure data center.
 

@@ -80,10 +80,11 @@ nav:
     - Overview: ./deploy/index.md
     - Templates & DevOps:
       - Azure Resource Templates & DevOps: ./azure/SampleARMwithScripts.md
-    - Compliance using Landing Zone:
+      - Setup Subscription: ./azure/compliance/setup-subscription.md
+      - Resource Management: ./azure/compliance/resource-management.md
+    - Compliance:
       - Governance: ./azure/compliance/governance.md
       - Landing Zone: ./azure/Landingzone.md
-      - Setup Subscription: ./azure/compliance/setup-subscription.md
       - Setup Management Group: ./azure/compliance/setup-management-group.md
       - Azure Policy: ./azure/compliance/azure-policy.md
       - Regulatory Compliance: ./azure/compliance/regulatory-compliance.md

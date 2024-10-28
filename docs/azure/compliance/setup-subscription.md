@@ -1,6 +1,6 @@
 # Setting up your enterprise Azure subscription administrators
 
-![azureadministratorpng](https://i0.wp.com/azuredays.com/wp-content/uploads/2020/05/azureadministratorpng.png?resize=222%2C222&ssl=1)Microsoft makes it easy to get started using Azure — sign up for a free subscription and get started. The tutorial show you how to use the portal to create virtual machines, storage, backups. All good.
+<img style="float: right; width: 20%; padding-inline: 6px" src="https://i0.wp.com/azuredays.com/wp-content/uploads/2020/05/azureadministratorpng.png?resize=222%2C222&ssl=1">Microsoft makes it easy to get started using Azure — sign up for a free subscription and get started. The tutorial show you how to use the portal to create virtual machines, storage, backups. All good.
 
 And then it comes time to take your applications into production. You may realize that you need to show auditors your security methods. And you want to be sure to protect your customer data. Or you may have cloud sprawl and want to control costs.
 

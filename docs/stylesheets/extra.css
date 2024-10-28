@@ -51,5 +51,8 @@
         font-weight: 100;
         font-size: small;       
     }
-
+    .right {
+      float: right;
+      margin-left: 10px; /* Optional: Adds space between the image and text */
+  }
 }

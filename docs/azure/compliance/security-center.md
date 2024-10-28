@@ -1,6 +1,6 @@
 # Setting up Security Center for production in enterprise
 
-![Icon-security-241-Security-Center](https://i0.wp.com/azuredays.com/wp-content/uploads/2020/06/icon-security-241-security-center.png?resize=166%2C166&ssl=1)Security Center provides out of the box policies and a dashboard to identify possible security issues with your subscription.
+<img style="float: right; width: 20%; padding-inline: 6px" src="https://i0.wp.com/azuredays.com/wp-content/uploads/2020/06/icon-security-241-security-center.png?resize=166%2C166&ssl=1">Security Center provides out of the box policies and a dashboard to identify possible security issues with your subscription.
 
 To start with Security Center has a good set of policies that will help you do basic audits and provide security alerts.
 

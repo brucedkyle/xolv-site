@@ -1,6 +1,6 @@
 # Understanding Azure Policy for regulatory compliance
 
-![azpolicy](https://i0.wp.com/azuredays.com/wp-content/uploads/2020/06/azpolicy.png?resize=218%2C213&ssl=1)Use [Azure Policy](https://docs.microsoft.com/en-us/azure/governance/policy/overview) to manage and enforce your standards for governance and compliance and to assess that compliance at scale. The idea is to set standards and to be able to demonstrated your organization is meeting your regularoty compliance goals.
+<img style="float: right; width: 20%; padding-inline: 6px" src="https://i0.wp.com/azuredays.com/wp-content/uploads/2020/06/azpolicy.png?resize=218%2C213&ssl=1">Use [Azure Policy](https://docs.microsoft.com/en-us/azure/governance/policy/overview) to manage and enforce your standards for governance and compliance and to assess that compliance at scale. The idea is to set standards and to be able to demonstrated your organization is meeting your regularoty compliance goals.
 
 In previous blog posts, you learned about setting up [Management Groups](http://azuredays.com/2020/06/29/setting-up-management-group-for-production-in-enterprise/) and [Security Center](http://azuredays.com/2020/06/18/setting-up-security-center-for-production-in-enterprise/). For management groups, you learned that policies can be applied  across multiple subscriptions. You noticed that Security Center provides a set of policies (an an policy initiative) for your subscription.
 

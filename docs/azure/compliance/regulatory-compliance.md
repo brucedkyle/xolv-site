@@ -1,8 +1,6 @@
 # Walkthrough using Azure Policy to audit and enforce compliance
 
-Posted on [July 9, 2020July 7, 2020](https://azuredays.com/2020/07/09/walkthrough-using-azure-policy-to-audit-and-enforce-compliance/) by [Bruce D Kyle](https://azuredays.com/author/brucedkyle2014/)
-
-![azpolicy](https://i0.wp.com/azuredays.com/wp-content/uploads/2020/06/azpolicy.png?resize=218%2C213&ssl=1)Use [Azure Policy](https://docs.microsoft.com/en-us/azure/governance/policy/overview) to manage and enforce your standards for governance and compliance and to assess that compliance at scale. When you implement Azure Policy, you are effectively adding guard-rails for your users. But you also have a way to audit your organization compliance against a particular policy.
+<img style="float: right; width: 20%; padding-inline: 6px" src="https://i0.wp.com/azuredays.com/wp-content/uploads/2020/06/azpolicy.png?resize=218%2C213&ssl=1"> Use [Azure Policy](https://docs.microsoft.com/en-us/azure/governance/policy/overview) to manage and enforce your standards for governance and compliance and to assess that compliance at scale. When you implement Azure Policy, you are effectively adding guard-rails for your users. But you also have a way to audit your organization compliance against a particular policy.
 
 In this walkthrough, you will learn the implications of using a Policy in Azure. For this walkthrough, you will use Azure CLI to create a storage account that will not be compliant, but allowing its contents to be accessed using HTTP. Then you will add a Policy that requires HTTPS, and see how you can audit existing, non-compliant resource. You will audit the resource using the portal and using PowerShell script. Then you will create another non-compliant resource and see how Azure blocks the resource during creation.
 
