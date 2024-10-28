@@ -4,7 +4,7 @@ Cloud Pak for Data uses Azure services and features, including VNets, Availabili
 
 The link in the References section provides a template that deploys an Openshift cluster on Azure with all the required resources, infrastructure and then deploys IBM Cloud Pak for Data along with the add-ons that user chooses.
 
-The deployment guide on GitHub provides step-by-step instructions for deploying IBM Cloud Pak for Data on a Red Hat OpenShift Container Platform 4.8 cluster on Azure. With this template, you can automatically deploy a multi-master, production instance of Cloud Pak for Data.
+The [deployment guide](https://learn.microsoft.com/en-us/samples/azure/azure-quickstart-templates/ibm-cloud-pak-for-data/) on GitHub provides step-by-step instructions for deploying IBM Cloud Pak for Data on a Red Hat OpenShift Container Platform 4.8 cluster on Azure. With this template, you can automatically deploy a multi-master, production instance of Cloud Pak for Data.
 
 ## Prerequisites
 
@@ -29,7 +29,3 @@ If you choose Portworx as your storage class, see [Portworx documentation](https
 ## Reference
 
 See [Cloud Pak for Data on Azure](https://github.com/Azure/azure-quickstart-templates/tree/master/application-workloads/ibm-cloud-pak/ibm-cloud-pak-for-data).
-
-## Updated
-
-Aug 2022
