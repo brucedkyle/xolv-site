@@ -105,3 +105,4 @@ such as the T5 (Text-to-Text Transfer Transformer) model. Developed by Google in
 
 - [Natural Language Processing with Transformers](https://www.amazon.in/Natural-Language-Processing-Transformers-Revised/dp/1098136799)
 - [Generative Deep Learning: Teaching Machines to Paint, Write, Compose, and Play](https://www.amazon.in/Generative-Deep-Learning-David-Foster/dp/1492041947)
+- [Attention is All You Need: Demystifying the Transformer Revolution in NLP](https://medium.com/analytics-vidhya/attention-is-all-you-need-demystifying-the-transformer-revolution-in-nlp-68a2a5fbd95b)

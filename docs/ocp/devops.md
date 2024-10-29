@@ -1,12 +1,24 @@
 # Use Cloud Native Toolkit DevOps on ROKS instance, share with team members
 
-Cloud-Native Toolkit is a collection of open-source assets that provide an environment for developing cloud-native applications for deployment within Red Hat OpenShift and Kubernetes. It embodies IBM Garage Method principles and practices for consistently developed applications, incorporating best practices that increase developer velocity for efficient delivery of business value. 
+[Cloud-Native Toolkit](https://develop.cloudnativetoolkit.dev/) is a collection of open-source assets that provide an environment for developing cloud-native applications for deployment within Red Hat OpenShift and Kubernetes. 
+
+## Environment components
+
+After installation, the environment consists of the following components and developer tools:
+
+- A Red Hat OpenShift or IBM Cloud Kubernetes Service development cluster
+- A collection of continuous delivery tools deployed into the cluster
+- A set of backend services
+
+This diagram illustrates the environment:
+
+![devops](./media/catalyst-provisioned-environment.png)
 
 In this tutorial, learn how to set up the Cloud-Native Toolkit in your own OpenShift cluster running on IBM Cloud in TechZone. NOIE: The Skytap and Fyre instances do not provide a way to share the OpenShift instance with your team.
 
 In this tutorial, you will:
 
-1. Create an cluster of **IBM RedHat Openshift Kubernetes Service (ROKS)** using TechZone
+1. Create an cluster of **IBM RedHat Openshift Kubernetes Service (ROKS)** 
 2. Install the Cloud Native Toolkit into your ROKS cluster to provide the tools needed for your CI/CI pipeline.
 3. Add [Artifactory](https://jfrog.com/artifactory/) as your HELM and container image repository.
 4. Clone the sample repo of a React application into GitHub, then pull the sample from your GitHub to run locally. Run the app locally.
@@ -15,8 +27,6 @@ In this tutorial, you will:
 7. Add team members join in working with the cluster.
 
 You will want to use ROKS when you want to share your cluster with others on your team.
-
-INPORTANT: Using TechZone is not for client teams. The steps for setting up the **Cloud Native Toolkit** in this tutorial are similar when using IBM Cloud Red Hat Openshift Kubernetes cluster.
 
 ## Roles
 
