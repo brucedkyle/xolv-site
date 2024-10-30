@@ -95,14 +95,19 @@ The completed text will look like the following:
 
 such as the T5 (Text-to-Text Transfer Transformer) model. Developed by Google in 2020, T5 LLM can perform natural language understanding (NLU) and natural language generation (NLG). T5 LLM can be understood as a pure transformer using both encoder and decoder networks.
 
+## Dive deeper
+
+See [Attention is All You Need: Demystifying the Transformer Revolution in NLP](https://medium.com/analytics-vidhya/attention-is-all-you-need-demystifying-the-transformer-revolution-in-nlp-68a2a5fbd95b) for a deep dive into transformers.
+
 ## References
 
 - [Understanding Transformers: A Deep Dive into NLP’s Core Technology](https://www.analyticsvidhya.com/blog/2024/04/understanding-transformers-a-deep-dive-into-nlps-core-technology/)
 - [A Comprehensive Overview of Large Language Model](https://arxiv.org/pdf/2307.06435)
 - [Large Language Models (LLMs): Types, Examples](https://vitalflux.com/large-language-models-concepts-examples/)
+- [Attention is All You Need: Demystifying the Transformer Revolution in NLP](https://medium.com/analytics-vidhya/attention-is-all-you-need-demystifying-the-transformer-revolution-in-nlp-68a2a5fbd95b)
 
 ## Books
 
 - [Natural Language Processing with Transformers](https://www.amazon.in/Natural-Language-Processing-Transformers-Revised/dp/1098136799)
 - [Generative Deep Learning: Teaching Machines to Paint, Write, Compose, and Play](https://www.amazon.in/Generative-Deep-Learning-David-Foster/dp/1492041947)
-- [Attention is All You Need: Demystifying the Transformer Revolution in NLP](https://medium.com/analytics-vidhya/attention-is-all-you-need-demystifying-the-transformer-revolution-in-nlp-68a2a5fbd95b)
+- [Attention is all you need](https://arxiv.org/abs/1706.03762)

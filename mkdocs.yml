@@ -19,10 +19,13 @@ nav:
       - Set up Tensorflow [Medium]: https://towardsdatascience.com/tensorflow-gpu-installation-made-easy-use-conda-instead-of-pip-52e5249374bc
     - Large Language Models:
       - LLM Concepts: ./ai-ml-datascience/llm/largelanguage.md
+      - LLM Tooling: ./ai-ml-datascience/llm/llm-tooling.md
+      - Prompt Engineering: ./ai-ml-datascience/llm/prompt-engineering.md
+    - RAG:
+      - RAG Overview: ./ai-ml-datascience/llm/rag-overview.md
+      - RAG chatbot app with ChatGPT LangChain [GitHub]: https://github.com/brucedkyle/xolv-site/blob/main/prototype/
     - Text classification:
       - Using Hugging Face [GitHub]: https://github.com/brucedkyle/xolv-site/blob/main/nlm-pattern/text-classification/README.md
-    - RAG chatbot starters:
-      - RAG chatbot app with ChatGPT LangChain [GitHub]: https://github.com/brucedkyle/xolv-site/blob/main/prototype/
     - Samples:
       - OpenAI hello notebook [GitHub]: https://github.com/brucedkyle/xolv-site/blob/main/nlm-pattern/openai-helloworld/README.md
       - Build a local AI co-pilot [IBM]: https://developer.ibm.com/tutorials/awb-local-ai-copilot-ibm-granite-code-ollama-continue/
@@ -135,11 +138,26 @@ theme:
     - content.action.view
     - search.suggest
     - search.share
+    - content.code.copy
+    - content.code.annotate
   language: en
   icon: 
-      repo: fontawesome/brands/github
-      edit: material/pencil 
-      view: material/eye
+    repo: fontawesome/brands/github
+    edit: material/pencil 
+    view: material/eye
+    admonition:
+      note: octicons/tag-16
+      abstract: octicons/checklist-16
+      info: octicons/info-16
+      tip: octicons/squirrel-16
+      success: octicons/check-16
+      question: octicons/question-16
+      warning: octicons/alert-16
+      failure: octicons/x-circle-16
+      danger: octicons/zap-16
+      bug: octicons/bug-16
+      example: octicons/beaker-16
+      quote: octicons/quote-16
   logo: ./media/my-xolv.info.png
   palette:
     # Palette toggle for light mode
@@ -177,6 +195,12 @@ markdown_extensions:
   - pymdownx.mark
   - pymdownx.tilde
   - def_list
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
   - pymdownx.tasklist:
       custom_checkbox: true
 copyright: Copyright &copy; 2023 xolv.co 
